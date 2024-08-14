@@ -4,11 +4,11 @@ import com.liubs.shadowrpcfly.base.annotation.ModuleInject;
 import com.liubs.shadowrpcfly.base.annotation.ShadowModule;
 import com.liubs.shadowrpcfly.base.annotation.ShadowService;
 import com.liubs.shadowrpcfly.base.annotation.ShadowServiceHolder;
-import com.liubs.shadowrpcfly.base.config.ServerConfig;
-import com.liubs.shadowrpcfly.base.logging.Logger;
+import com.liubs.shadowrpcfly.config.ServerConfig;
+import com.liubs.shadowrpcfly.logging.Logger;
 import com.liubs.shadowrpcfly.base.module.IModule;
 import com.liubs.shadowrpcfly.protocol.SerializeModule;
-import com.liubs.shadowrpcfly.protocol.util.AnnotationScanner;
+import com.liubs.shadowrpcfly.server.util.AnnotationScanner;
 import com.liubs.shadowrpcfly.server.service.ServiceLookUp;
 import com.liubs.shadowrpcfly.server.service.ServiceTarget;
 

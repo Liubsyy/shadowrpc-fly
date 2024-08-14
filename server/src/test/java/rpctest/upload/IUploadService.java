@@ -1,7 +1,7 @@
 package rpctest.upload;
 
 
-import com.liubs.shadowrpcfly.base.annotation.ShadowInterface;
+import com.liubs.shadowrpcfly.annotation.ShadowInterface;
 
 /**
  * @author Liubsyy

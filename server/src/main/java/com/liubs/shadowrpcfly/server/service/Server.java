@@ -1,6 +1,6 @@
 package com.liubs.shadowrpcfly.server.service;
 
-import com.liubs.shadowrpcfly.base.config.ServerConfig;
+import com.liubs.shadowrpcfly.config.ServerConfig;
 import com.liubs.shadowrpcfly.server.handler.ShadowChannelInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

@@ -1,8 +1,8 @@
 package rpctest.upload;
 
 import com.liubs.shadowrpcfly.base.annotation.ShadowService;
-import com.liubs.shadowrpcfly.base.config.ServerConfig;
-import com.liubs.shadowrpcfly.base.logging.Logger;
+import com.liubs.shadowrpcfly.config.ServerConfig;
+import com.liubs.shadowrpcfly.logging.Logger;
 import com.liubs.shadowrpcfly.server.init.ServerBuilder;
 import org.junit.Test;
 

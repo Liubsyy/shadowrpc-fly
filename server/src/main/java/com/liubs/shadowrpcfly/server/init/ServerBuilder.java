@@ -1,6 +1,6 @@
 package com.liubs.shadowrpcfly.server.init;
 
-import com.liubs.shadowrpcfly.base.config.ServerConfig;
+import com.liubs.shadowrpcfly.config.ServerConfig;
 import com.liubs.shadowrpcfly.server.service.ServerManager;
 
 import java.util.ArrayList;

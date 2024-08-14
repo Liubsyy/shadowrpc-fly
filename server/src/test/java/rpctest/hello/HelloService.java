@@ -1,8 +1,8 @@
 package rpctest.hello;
 
 import com.liubs.shadowrpcfly.base.annotation.ShadowService;
-import com.liubs.shadowrpcfly.base.config.ServerConfig;
-import com.liubs.shadowrpcfly.base.constant.SerializerEnum;
+import com.liubs.shadowrpcfly.config.ServerConfig;
+import com.liubs.shadowrpcfly.constant.SerializerEnum;
 import com.liubs.shadowrpcfly.server.init.ServerBuilder;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
