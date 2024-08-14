@@ -4,9 +4,8 @@ package com.liubs.shadowrpcfly.server.handler;
 import com.liubs.shadowrpcfly.base.module.ModulePool;
 import com.liubs.shadowrpcfly.protocol.SerializeModule;
 import com.liubs.shadowrpcfly.protocol.constant.ResponseCode;
-import com.liubs.shadowrpcfly.protocol.model.IModelParser;
-import com.liubs.shadowrpcfly.protocol.model.RequestModel;
-import com.liubs.shadowrpcfly.protocol.model.ResponseModel;
+import com.liubs.shadowrpcfly.protocol.entity.ShadowRPCRequest;
+import com.liubs.shadowrpcfly.protocol.entity.ShadowRPCResponse;
 import com.liubs.shadowrpcfly.server.ServerModule;
 import com.liubs.shadowrpcfly.server.service.ServiceLookUp;
 import com.liubs.shadowrpcfly.server.service.ServiceTarget;
@@ -48,29 +47,27 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         // 打印验证影响速度，压测时去掉
         //logger.info("Server received: " + msg);
 
-        IModelParser modelParser = serializeModule.getSerializer().getModelParser();
-
-        RequestModel requestModel = modelParser.fromRequest(msg);
+        ShadowRPCRequest request = (ShadowRPCRequest)msg;
 
         //System.out.println("Server received: " + requestModel.getParams()[0]);
         executorService.execute(()->{
             try {
 
                 ServiceLookUp serviceLookUp = new ServiceLookUp();
-                serviceLookUp.setServiceName(requestModel.getServiceName());
-                serviceLookUp.setMethodName(requestModel.getMethodName());
-                serviceLookUp.setParamTypes(requestModel.getParamTypes());
+                serviceLookUp.setServiceName(request.getServiceName());
+                serviceLookUp.setMethodName(request.getMethodName());
+                serviceLookUp.setParamTypes(request.getParamTypes());
                 ServiceTarget targetRPC = serverModule.getRPC(serviceLookUp);
 
-                Object result = targetRPC.invoke(requestModel.getParams());
+                Object result = targetRPC.invoke(request.getParams());
 
-                ResponseModel responseModel = new ResponseModel();
-                responseModel.setTraceId(requestModel.getTraceId());
-                responseModel.setCode(ResponseCode.SUCCESS.getCode());
-                responseModel.setResult(result);
+                ShadowRPCResponse response = new ShadowRPCResponse();
+                response.setTraceId(response.getTraceId());
+                response.setCode(ResponseCode.SUCCESS.getCode());
+                response.setResult(result);
 
                 // 响应客户端
-                ctx.writeAndFlush(modelParser.toResponse(responseModel));
+                ctx.writeAndFlush(response);
             } catch (Exception e) {
                 e.printStackTrace();
             }

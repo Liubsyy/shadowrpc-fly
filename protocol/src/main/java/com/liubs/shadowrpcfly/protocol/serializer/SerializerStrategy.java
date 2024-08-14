@@ -1,14 +1,8 @@
 package com.liubs.shadowrpcfly.protocol.serializer;
 
 import com.liubs.shadowrpcfly.base.constant.SerializerEnum;
-import com.liubs.shadowrpcfly.protocol.entity.JavaSerializeRPCRequest;
-import com.liubs.shadowrpcfly.protocol.entity.JavaSerializeRPCResponse;
 import com.liubs.shadowrpcfly.protocol.entity.ShadowRPCRequest;
 import com.liubs.shadowrpcfly.protocol.entity.ShadowRPCResponse;
-import com.liubs.shadowrpcfly.protocol.model.IModelParser;
-import com.liubs.shadowrpcfly.protocol.serializer.javaserializer.JavaModelParser;
-import com.liubs.shadowrpcfly.protocol.serializer.javaserializer.JavaSerializer;
-import com.liubs.shadowrpcfly.protocol.serializer.kryo.KryoModelParser;
 import com.liubs.shadowrpcfly.protocol.serializer.kryo.KryoSerializer;
 
 /**
@@ -20,17 +14,9 @@ public enum SerializerStrategy {
     KRYO(SerializerEnum.KRYO,
             new KryoSerializer(),
             ShadowRPCRequest.class,
-            ShadowRPCResponse.class,
-            new KryoModelParser()
-            ),
+            ShadowRPCResponse.class
+            )
 
-
-    JAVA_SERIALISE(SerializerEnum.JAVA_SERIALISE,
-            new JavaSerializer(),
-            JavaSerializeRPCRequest.class,
-            JavaSerializeRPCResponse.class,
-            new JavaModelParser()
-    ),
 
     ;
 
@@ -39,15 +25,13 @@ public enum SerializerStrategy {
     private Class<?> requestClass;
     private Class<?> responseClass;
 
-    private IModelParser modelParser;
 
 
-    SerializerStrategy(SerializerEnum serializerEnum,ISerializer serializer, Class<?> requestClass, Class<?> responseClass, IModelParser modelParser) {
+    SerializerStrategy(SerializerEnum serializerEnum,ISerializer serializer, Class<?> requestClass, Class<?> responseClass) {
         this.serializerEnum = serializerEnum;
         this.serializer = serializer;
         this.requestClass = requestClass;
         this.responseClass = responseClass;
-        this.modelParser = modelParser;
     }
 
 
@@ -63,9 +47,6 @@ public enum SerializerStrategy {
         return responseClass;
     }
 
-    public IModelParser getModelParser() {
-        return modelParser;
-    }
 
 
 

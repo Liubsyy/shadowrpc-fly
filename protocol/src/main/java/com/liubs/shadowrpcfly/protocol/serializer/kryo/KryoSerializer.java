@@ -38,7 +38,6 @@ public class KryoSerializer implements ISerializer {
 
     @Override
     public byte[] serialize(Object object) {
-
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         Output output = new Output(byteArrayOutputStream);
         kryoThreadLocal.get().writeObject(output, object);
