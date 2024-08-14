@@ -23,14 +23,6 @@
         </dependency>
 
         <dependency>
-            <groupId>io.github.liubsyy</groupId>
-            <artifactId>shadowrpcfly-protocol</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
-
-
-        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>${netty.version}</version>

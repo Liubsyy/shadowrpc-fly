@@ -11,7 +11,6 @@
 
     <modules>
         <module>base</module>
-        <module>protocol</module>
         <module>client</module>
         <module>server</module>
 
