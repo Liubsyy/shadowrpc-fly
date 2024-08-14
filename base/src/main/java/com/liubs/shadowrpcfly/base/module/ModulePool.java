@@ -25,7 +25,7 @@ public class ModulePool {
     }
 
     public static void iniModules(){
-        Set<Class<?>> classes = PackageScanUtil.scanClasses("com.liubs.shadowrpc", ShadowModule.class);
+        Set<Class<?>> classes = PackageScanUtil.scanClasses("com.liubs.shadowrpcfly", ShadowModule.class);
         classes.forEach(c->{
             try {
                 IModule o = (IModule)c.newInstance();

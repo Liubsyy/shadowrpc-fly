@@ -1,7 +1,6 @@
 package com.liubs.shadowrpcfly.protocol.serializer;
 
 import com.liubs.shadowrpcfly.base.constant.SerializerEnum;
-import com.liubs.shadowrpc.protocol.entity.*;
 import com.liubs.shadowrpcfly.protocol.entity.JavaSerializeRPCRequest;
 import com.liubs.shadowrpcfly.protocol.entity.JavaSerializeRPCResponse;
 import com.liubs.shadowrpcfly.protocol.entity.ShadowRPCRequest;
