@@ -2,10 +2,10 @@ package rpctest.upload;
 
 import com.liubs.shadowrpcfly.base.annotation.ShadowService;
 import com.liubs.shadowrpcfly.base.config.ServerConfig;
+import com.liubs.shadowrpcfly.base.logging.Logger;
 import com.liubs.shadowrpcfly.server.init.ServerBuilder;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.nio.file.StandardOpenOption;
 @ShadowService(serviceName = "uploadService")
 public class UploadServiceImpl implements IUploadService{
 
-    private static final Logger logger = LoggerFactory.getLogger(UploadServiceImpl.class);
+    private static final Logger logger = Logger.getLogger(UploadServiceImpl.class);
 
 
     @Override

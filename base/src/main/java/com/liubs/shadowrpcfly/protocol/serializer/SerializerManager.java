@@ -2,8 +2,7 @@ package com.liubs.shadowrpcfly.protocol.serializer;
 
 
 import com.liubs.shadowrpcfly.base.config.BaseConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.liubs.shadowrpcfly.base.logging.Logger;
 
 
 /**
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * @date 2023/12/23 5:01 PM
  **/
 public class SerializerManager {
-    private static final Logger logger = LoggerFactory.getLogger(SerializerManager.class);
+    private static final Logger logger = Logger.getLogger(SerializerManager.class);
 
     private static SerializerManager instance = new SerializerManager();
 

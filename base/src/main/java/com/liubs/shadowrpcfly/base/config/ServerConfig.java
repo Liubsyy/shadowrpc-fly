@@ -1,7 +1,6 @@
 package com.liubs.shadowrpcfly.base.config;
 
 import com.liubs.shadowrpcfly.base.exception.ConfigFieldMissException;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Liubsyy
@@ -56,7 +55,7 @@ public class ServerConfig extends BaseConfig {
     }
 
     public boolean checkValid(){
-        if(StringUtils.isEmpty(group)) {
+        if(null == group || group.isEmpty()) {
             throw new ConfigFieldMissException("group未配置");
         }
         return true;

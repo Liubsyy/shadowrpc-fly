@@ -1,13 +1,13 @@
 package com.liubs.shadowrpcfly.server.handler;
 
+import com.liubs.shadowrpcfly.base.logging.Logger;
 import com.liubs.shadowrpcfly.base.module.ModulePool;
 import com.liubs.shadowrpcfly.protocol.SerializeModule;
 import com.liubs.shadowrpcfly.protocol.entity.HeartBeatMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2023/12/15 10:01 PM
  **/
 public class MessageHandler extends ByteToMessageCodec<Object> {
-    private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
+    private static final Logger logger = Logger.getLogger(MessageHandler.class);
 
     private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
 

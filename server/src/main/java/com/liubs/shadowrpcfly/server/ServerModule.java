@@ -5,13 +5,13 @@ import com.liubs.shadowrpcfly.base.annotation.ShadowModule;
 import com.liubs.shadowrpcfly.base.annotation.ShadowService;
 import com.liubs.shadowrpcfly.base.annotation.ShadowServiceHolder;
 import com.liubs.shadowrpcfly.base.config.ServerConfig;
+import com.liubs.shadowrpcfly.base.logging.Logger;
 import com.liubs.shadowrpcfly.base.module.IModule;
 import com.liubs.shadowrpcfly.protocol.SerializeModule;
 import com.liubs.shadowrpcfly.protocol.util.AnnotationScanner;
 import com.liubs.shadowrpcfly.server.service.ServiceLookUp;
 import com.liubs.shadowrpcfly.server.service.ServiceTarget;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @ShadowModule
 public class ServerModule implements IModule {
-    private static final Logger logger = LoggerFactory.getLogger(ServerModule.class);
+    private static final Logger logger = Logger.getLogger(ServerModule.class);
 
     @ModuleInject
     private SerializeModule serializeModule;

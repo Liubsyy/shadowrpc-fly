@@ -1,10 +1,10 @@
 package com.liubs.shadowrpcfly.server.handler;
 
+import com.liubs.shadowrpcfly.base.logging.Logger;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class QpsStatHandler extends ChannelDuplexHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(QpsStatHandler.class);
+    private static final Logger logger = Logger.getLogger(QpsStatHandler.class);
 
     //请求数量
     private static AtomicLong activeRequests = new AtomicLong(0);

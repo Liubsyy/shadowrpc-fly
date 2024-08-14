@@ -2,9 +2,9 @@ package com.liubs.shadowrpcfly.base.module;
 
 import com.liubs.shadowrpcfly.base.annotation.ModuleInject;
 import com.liubs.shadowrpcfly.base.annotation.ShadowModule;
+import com.liubs.shadowrpcfly.base.logging.Logger;
 import com.liubs.shadowrpcfly.base.util.PackageScanUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.Set;
  * @date 2024/1/15
  */
 public class ModulePool {
-    private static final Logger logger = LoggerFactory.getLogger(ModulePool.class);
+    private static final Logger logger = Logger.getLogger(ModulePool.class);
 
     private static Map<Class<?>,IModule> moduleMap = new HashMap<>();
 

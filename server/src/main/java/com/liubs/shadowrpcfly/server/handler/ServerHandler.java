@@ -1,6 +1,7 @@
 package com.liubs.shadowrpcfly.server.handler;
 
 
+import com.liubs.shadowrpcfly.base.logging.Logger;
 import com.liubs.shadowrpcfly.base.module.ModulePool;
 import com.liubs.shadowrpcfly.protocol.SerializeModule;
 import com.liubs.shadowrpcfly.protocol.constant.ResponseCode;
@@ -11,8 +12,7 @@ import com.liubs.shadowrpcfly.server.service.ServiceLookUp;
 import com.liubs.shadowrpcfly.server.service.ServiceTarget;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
  * @date 2023/12/3 10:23 PM
  **/
 public class ServerHandler extends ChannelInboundHandlerAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(ServerHandler.class);
+    private static final Logger logger = Logger.getLogger(ServerHandler.class);
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 

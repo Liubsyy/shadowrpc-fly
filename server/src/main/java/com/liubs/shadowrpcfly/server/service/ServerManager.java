@@ -1,11 +1,11 @@
 package com.liubs.shadowrpcfly.server.service;
 
 import com.liubs.shadowrpcfly.base.config.ServerConfig;
+import com.liubs.shadowrpcfly.base.logging.Logger;
 import com.liubs.shadowrpcfly.base.module.ModulePool;
 import com.liubs.shadowrpcfly.protocol.SerializeModule;
 import com.liubs.shadowrpcfly.server.ServerModule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2023/12/18 10:49 PM
  */
 public class ServerManager {
-    private static final Logger logger = LoggerFactory.getLogger(ServerManager.class);
+    private static final Logger logger = Logger.getLogger(ServerManager.class);
 
     private ServerConfig serverConfig;
 

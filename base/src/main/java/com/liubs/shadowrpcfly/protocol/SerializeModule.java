@@ -5,8 +5,7 @@ import com.liubs.shadowrpcfly.base.config.BaseConfig;
 import com.liubs.shadowrpcfly.base.constant.SerializerEnum;
 import com.liubs.shadowrpcfly.base.module.IModule;
 import com.liubs.shadowrpcfly.protocol.serializer.SerializerStrategy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.liubs.shadowrpcfly.base.logging.Logger;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import java.util.List;
 
 @ShadowModule
 public class SerializeModule implements IModule {
-    private static final Logger logger = LoggerFactory.getLogger(SerializeModule.class);
+    private static final Logger logger = Logger.getLogger(SerializeModule.class);
 
 
     //配置
