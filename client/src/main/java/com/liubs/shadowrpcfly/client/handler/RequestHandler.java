@@ -1,6 +1,7 @@
 package com.liubs.shadowrpcfly.client.handler;
 
-import com.liubs.shadowrpcfly.client.seriallize.ISerializer;
+
+import com.liubs.shadowrpcfly.serializer.ISerializer;
 
 /**
  * @author Liubsyy

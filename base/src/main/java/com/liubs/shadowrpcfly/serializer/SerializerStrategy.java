@@ -1,9 +1,9 @@
-package com.liubs.shadowrpcfly.protocol.serializer;
+package com.liubs.shadowrpcfly.serializer;
 
 import com.liubs.shadowrpcfly.constant.SerializerEnum;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCRequest;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
-import com.liubs.shadowrpcfly.protocol.serializer.kryo.KryoSerializer;
+import com.liubs.shadowrpcfly.serializer.kryo.KryoSerializer;
 
 /**
  * @author Liubsyy

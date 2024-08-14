@@ -3,8 +3,8 @@ package com.liubs.shadowrpcfly.client.handler;
 import com.liubs.shadowrpcfly.client.connection.HeartBeatMessage;
 import com.liubs.shadowrpcfly.client.logger.Logger;
 import com.liubs.shadowrpcfly.client.nio.IMessageListener;
-import com.liubs.shadowrpcfly.client.seriallize.ISerializer;
-import com.liubs.shadowrpcfly.protocol.entity.JavaSerializeRPCResponse;
+import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
+import com.liubs.shadowrpcfly.serializer.ISerializer;
 
 /**
  * @author Liubsyy
@@ -35,7 +35,7 @@ public class ResponseHandler implements IMessageListener {
             return;
         }
 
-        JavaSerializeRPCResponse response = serializer.deserialize(bytes, JavaSerializeRPCResponse.class);
+        ShadowRPCResponse response = serializer.deserialize(bytes, ShadowRPCResponse.class);
         if(response == null) {
             return;
         }

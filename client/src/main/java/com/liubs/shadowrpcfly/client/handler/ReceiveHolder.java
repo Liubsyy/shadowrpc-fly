@@ -1,6 +1,6 @@
 package com.liubs.shadowrpcfly.client.handler;
 
-import com.liubs.shadowrpcfly.protocol.entity.JavaSerializeRPCResponse;
+import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -31,7 +31,10 @@ public class ReceiveHolder {
     }
 
 
-    public void receiveData(JavaSerializeRPCResponse responseModel){
+    public void receiveData(ShadowRPCResponse responseModel){
+        if(null == responseModel.getTraceId()) {
+            return;
+        }
         CompletableFuture<Object> future = futureMap.remove(responseModel.getTraceId());
         if(null != future) {
             future.complete(responseModel);

@@ -1,7 +1,8 @@
 package com.liubs.shadowrpcfly.client.nio;
 
-import com.liubs.shadowrpcfly.client.seriallize.ISerializer;
-import com.liubs.shadowrpcfly.client.seriallize.JavaSerializer;
+
+import com.liubs.shadowrpcfly.serializer.ISerializer;
+import com.liubs.shadowrpcfly.serializer.kryo.KryoSerializer;
 
 /**
  * @author Liubsyy
@@ -10,7 +11,7 @@ import com.liubs.shadowrpcfly.client.seriallize.JavaSerializer;
 public class NIOConfig {
 
     //序列化 & 反序列化方式
-    private ISerializer serializer = new JavaSerializer();
+    private ISerializer serializer = new KryoSerializer();
 
     //连接超时
     private long connectTimeout = 3000;

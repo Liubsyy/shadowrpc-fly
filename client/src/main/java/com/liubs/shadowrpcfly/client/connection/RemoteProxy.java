@@ -1,13 +1,13 @@
 package com.liubs.shadowrpcfly.client.connection;
 
-import com.liubs.shadowrpcfly.base.annotation.ShadowInterface;
 import com.liubs.shadowrpcfly.client.exception.RemoteClosedException;
 import com.liubs.shadowrpcfly.client.exception.WriteTimeoutException;
 import com.liubs.shadowrpcfly.client.handler.ReceiveHolder;
 import com.liubs.shadowrpcfly.client.logger.Logger;
 import com.liubs.shadowrpcfly.client.nio.MessageSendFuture;
-import com.liubs.shadowrpcfly.protocol.entity.JavaSerializeRPCRequest;
-import com.liubs.shadowrpcfly.protocol.entity.JavaSerializeRPCResponse;
+import com.liubs.shadowrpcfly.protocol.ShadowRPCRequest;
+import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
+import com.liubs.shadowrpcfly.annotation.ShadowInterface;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -49,13 +49,13 @@ public class RemoteProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        JavaSerializeRPCRequest requestModel = new JavaSerializeRPCRequest();
+        ShadowRPCRequest request = new ShadowRPCRequest();
         String traceId = UUID.randomUUID().toString();
-        requestModel.setTraceId(traceId);
-        requestModel.setServiceName(serviceName);
-        requestModel.setMethodName(method.getName());
-        requestModel.setParamTypes(method.getParameterTypes());
-        requestModel.setParams(args);
+        request.setTraceId(traceId);
+        request.setServiceName(serviceName);
+        request.setMethodName(method.getName());
+        request.setParamTypes(method.getParameterTypes());
+        request.setParams(args);
 
 
         Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
@@ -66,7 +66,7 @@ public class RemoteProxy implements InvocationHandler {
 
         MessageSendFuture messageSendFuture = null;
         try{
-            messageSendFuture = clientConnection.sendMessage(clientConnection.getRequestHandler().handleMessage(requestModel));
+            messageSendFuture = clientConnection.sendMessage(clientConnection.getRequestHandler().handleMessage(request));
             if(null != messageSendFuture) {
                 messageSendFuture.get(writeChannelTimeout,TimeUnit.MILLISECONDS);
             }
@@ -82,7 +82,7 @@ public class RemoteProxy implements InvocationHandler {
 
 
         try{
-            JavaSerializeRPCResponse responseModel = (JavaSerializeRPCResponse)future.get(3, TimeUnit.SECONDS);
+            ShadowRPCResponse responseModel = (ShadowRPCResponse)future.get(3, TimeUnit.SECONDS);
             if(responseModel != null) {
                 return responseModel.getResult();
             }else {

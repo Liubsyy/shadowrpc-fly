@@ -1,4 +1,4 @@
-package com.liubs.shadowrpcfly.protocol.serializer.kryo;
+package com.liubs.shadowrpcfly.serializer.kryo;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.SerializerFactory;

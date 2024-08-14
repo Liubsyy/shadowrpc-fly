@@ -1,4 +1,4 @@
-package com.liubs.shadowrpcfly.protocol.serializer;
+package com.liubs.shadowrpcfly.serializer;
 
 
 import com.liubs.shadowrpcfly.config.BaseConfig;

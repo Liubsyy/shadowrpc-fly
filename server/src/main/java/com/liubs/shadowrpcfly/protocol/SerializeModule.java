@@ -4,7 +4,7 @@ import com.liubs.shadowrpcfly.base.annotation.ShadowModule;
 import com.liubs.shadowrpcfly.config.BaseConfig;
 import com.liubs.shadowrpcfly.constant.SerializerEnum;
 import com.liubs.shadowrpcfly.base.module.IModule;
-import com.liubs.shadowrpcfly.protocol.serializer.SerializerStrategy;
+import com.liubs.shadowrpcfly.serializer.SerializerStrategy;
 import com.liubs.shadowrpcfly.logging.Logger;
 
 import java.util.List;

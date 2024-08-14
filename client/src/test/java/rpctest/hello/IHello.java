@@ -1,6 +1,6 @@
 package rpctest.hello;
 
-import com.liubs.shadowrpcfly.base.annotation.ShadowInterface;
+import com.liubs.shadowrpcfly.annotation.ShadowInterface;
 import rpctest.entity.MyMessage;
 
 /**

@@ -24,7 +24,7 @@ public class LoggerHandler {
 
     // print a message to System.out and optionally to custom stream
     protected void printMessage(String message) {
-        String log = "HotSecondsExtension: " + sdf.format(new Date()) +  " " + message;
+        String log = "shadowrpc-fly: " + sdf.format(new Date()) +  " " + message;
         System.out.println(log);
         if (outputStream != null)
             outputStream.println(log);

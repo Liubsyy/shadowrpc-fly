@@ -5,9 +5,7 @@ package com.liubs.shadowrpcfly.constant;
  * @date 2024/1/15
  */
 public enum SerializerEnum {
-    KRYO("KRYO","kryo序列化"),
-    PROTOBUF("PROTOBUF","protobuf序列化"),
-    JAVA_SERIALISE("JAVA_SERIALIZE","java原生序列化"),
+    KRYO("KRYO","kryo序列化")
 
     ;
 

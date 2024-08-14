@@ -1,11 +1,11 @@
-package com.liubs.shadowrpcfly.protocol.serializer.kryo;
+package com.liubs.shadowrpcfly.serializer.kryo;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCRequest;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
-import com.liubs.shadowrpcfly.protocol.serializer.ISerializer;
+import com.liubs.shadowrpcfly.serializer.ISerializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
