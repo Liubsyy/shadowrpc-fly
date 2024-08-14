@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.liubsyy</groupId>
+    <artifactId>shadowrpcfly</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>base</module>
+        <module>protocol</module>
+        <module>client-mini</module>
+        <module>server</module>
+
+
+    </modules>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- jar version -->
+        <netty.version>4.1.101.Final</netty.version>
+        <curator.framework.version>5.5.0</curator.framework.version>
+        <kryo.version>5.5.0</kryo.version>
+        <protobuf.java.version>3.25.1</protobuf.java.version>
+        <junit.version>4.13.2</junit.version>
+        <jackson.version>2.16.1</jackson.version>
+        <log4j.version>2.22.1</log4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
+        <reflections.version>0.10.2</reflections.version>
+        <apache.common.version>3.14.0</apache.common.version>
+
+
+        <!-- build version -->
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+        <os-maven.version>1.7.1</os-maven.version>
+        <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
+    </properties>
+
+
+
+    <dependencies>
+
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

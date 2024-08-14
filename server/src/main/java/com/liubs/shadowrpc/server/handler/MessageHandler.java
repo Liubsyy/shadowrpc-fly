@@ -1,0 +1,58 @@
+package com.liubs.shadowrpc.server.handler;
+
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.protocol.SerializeModule;
+import com.liubs.shadowrpc.protocol.entity.HeartBeatMessage;
+import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageCodec;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
+/**
+ * 消息的压缩和解压缩
+ * @author Liubsyy
+ * @date 2023/12/15 10:01 PM
+ **/
+public class MessageHandler extends ByteToMessageCodec<Object> {
+    private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
+
+    private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
+
+    @Override
+    protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
+        byte[] data;
+        if(msg instanceof HeartBeatMessage) {
+            //心跳消息
+            data = HeartBeatMessage.getHearBeatMsg();
+        }else {
+            data = serializeModule.serialize(msg);
+        }
+
+        int dataLength = data.length;
+        out.writeInt(dataLength); // 先写入消息长度
+        out.writeBytes(data); // 写入序列化后的数据
+    }
+
+    @Override
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        int readableBytes = in.readableBytes();
+        if(readableBytes <= 0){
+            return;
+        }
+        byte[] data = new byte[readableBytes];
+
+        in.readBytes(data);
+
+        if(HeartBeatMessage.isHeartBeatMsg(data)) {
+            logger.info("收到心跳消息...");
+        }else {
+            Object obj = serializeModule.deserializeRequest(data);
+            out.add(obj);
+        }
+    }
+
+}

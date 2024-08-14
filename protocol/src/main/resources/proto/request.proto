@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+
+package com.liubs.shadowrpc.protocol.entity;
+option java_outer_classname="ShadowRPCRequestProto";
+
+message ShadowRPCRequest {
+    string traceId = 1;
+    string serviceName = 2;
+    string methodName = 3;
+    repeated string paramTypes = 4;    //参数类名
+    repeated bytes params = 5;         //bytes类型充当参数
+
+}
