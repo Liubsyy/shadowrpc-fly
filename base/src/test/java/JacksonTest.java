@@ -1,5 +1,5 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.liubs.shadowrpc.base.util.JsonUtil;
+import com.liubs.shadowrpcfly.base.util.JsonUtil;
 import org.junit.Test;
 
 /**

@@ -1,9 +1,9 @@
 package rpctest.hello;
 
-import com.liubs.shadowrpc.base.annotation.ShadowService;
-import com.liubs.shadowrpc.base.config.ServerConfig;
-import com.liubs.shadowrpc.base.constant.SerializerEnum;
-import com.liubs.shadowrpc.server.init.ServerBuilder;
+import com.liubs.shadowrpcfly.base.annotation.ShadowService;
+import com.liubs.shadowrpcfly.base.config.ServerConfig;
+import com.liubs.shadowrpcfly.base.constant.SerializerEnum;
+import com.liubs.shadowrpcfly.server.init.ServerBuilder;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
 

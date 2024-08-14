@@ -1,7 +1,7 @@
 package rpctest.entity;
 
-import com.liubs.shadowrpc.protocol.annotation.ShadowEntity;
-import com.liubs.shadowrpc.protocol.annotation.ShadowField;
+import com.liubs.shadowrpcfly.protocol.annotation.ShadowEntity;
+import com.liubs.shadowrpcfly.protocol.annotation.ShadowField;
 
 import java.io.Serializable;
 

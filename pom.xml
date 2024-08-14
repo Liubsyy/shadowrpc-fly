@@ -12,7 +12,7 @@
     <modules>
         <module>base</module>
         <module>protocol</module>
-        <module>client-mini</module>
+        <module>client</module>
         <module>server</module>
 
 
