@@ -7,8 +7,6 @@ import com.liubs.shadowrpc.protocol.serializer.javaserializer.JavaModelParser;
 import com.liubs.shadowrpc.protocol.serializer.javaserializer.JavaSerializer;
 import com.liubs.shadowrpc.protocol.serializer.kryo.KryoModelParser;
 import com.liubs.shadowrpc.protocol.serializer.kryo.KryoSerializer;
-import com.liubs.shadowrpc.protocol.serializer.protobuf.ProtobufModelParser;
-import com.liubs.shadowrpc.protocol.serializer.protobuf.ShadowProtobufSerializer;
 
 /**
  * @author Liubsyy
@@ -23,12 +21,6 @@ public enum SerializerStrategy {
             new KryoModelParser()
             ),
 
-    PROTOBUF(SerializerEnum.PROTOBUF,
-            new ShadowProtobufSerializer(),
-            ShadowRPCRequestProto.ShadowRPCRequest.class,
-            ShadowRPCResponseProto.ShadowRPCResponse.class,
-            new ProtobufModelParser()
-            ),
 
     JAVA_SERIALISE(SerializerEnum.JAVA_SERIALISE,
             new JavaSerializer(),

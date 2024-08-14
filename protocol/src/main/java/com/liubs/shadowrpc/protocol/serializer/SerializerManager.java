@@ -1,15 +1,10 @@
 package com.liubs.shadowrpc.protocol.serializer;
 
 
-import com.google.protobuf.MessageLite;
 import com.liubs.shadowrpc.base.config.BaseConfig;
-import com.liubs.shadowrpc.protocol.serializer.protobuf.ParserForType;
-import com.liubs.shadowrpc.base.util.ClassScanWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Liubsyy
@@ -29,23 +24,7 @@ public class SerializerManager {
 
     //初始化序列化模块
     public void init(String ...packageNames) {
-        for(String packageName : packageNames) {
-            try {
-                ClassScanWalker.scanPackage(packageName,(classz)->{
-                    if(MessageLite.class.isAssignableFrom(classz)) {
-                        try {
-                            MessageLite messageLite = (MessageLite)classz.getDeclaredMethod("getDefaultInstance").invoke(null);
-                            ParserForType.addMessage(classz.getName(),messageLite);
 
-                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                           e.printStackTrace();
-                        }
-                    }
-                });
-            } catch (IOException e) {
-                logger.error("序列化包初始化失败",e);
-            }
-        }
     }
 
 

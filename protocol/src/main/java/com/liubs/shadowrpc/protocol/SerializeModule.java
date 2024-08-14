@@ -1,18 +1,13 @@
 package com.liubs.shadowrpc.protocol;
 
-import com.google.protobuf.MessageLite;
 import com.liubs.shadowrpc.base.annotation.ShadowModule;
 import com.liubs.shadowrpc.base.config.BaseConfig;
 import com.liubs.shadowrpc.base.constant.SerializerEnum;
 import com.liubs.shadowrpc.base.module.IModule;
-import com.liubs.shadowrpc.base.util.ClassScanWalker;
 import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
-import com.liubs.shadowrpc.protocol.serializer.protobuf.ParserForType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -44,23 +39,7 @@ public class SerializeModule implements IModule {
     public void init(BaseConfig baseConfig, List<String> packages) {
         init(baseConfig);
 
-        for(String packageName : packages) {
-            try {
-                ClassScanWalker.scanPackage(packageName,(classz)->{
-                    if(MessageLite.class.isAssignableFrom(classz)) {
-                        try {
-                            MessageLite messageLite = (MessageLite)classz.getDeclaredMethod("getDefaultInstance").invoke(null);
-                            ParserForType.addMessage(classz.getName(),messageLite);
 
-                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            } catch (IOException e) {
-                logger.error("序列化包初始化失败",e);
-            }
-        }
     }
 
     public SerializerStrategy getSerializer() {
