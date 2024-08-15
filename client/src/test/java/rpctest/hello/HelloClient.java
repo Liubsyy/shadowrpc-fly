@@ -65,7 +65,7 @@ public class HelloClient {
         List<Callable<String>> futureTaskList = new ArrayList<>();
 
         //100w个请求，27s
-        final int n = 10000000;
+        final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;
             futureTaskList.add(() -> {
@@ -83,7 +83,7 @@ public class HelloClient {
             });
         }
 
-        ExecutorService executorService = Executors.newFixedThreadPool(100);
+        ExecutorService executorService = Executors.newFixedThreadPool(50);
         executorService.invokeAll(futureTaskList);
         long time2 = System.currentTimeMillis();
 
