@@ -2,7 +2,7 @@ package com.liubs.shadowrpcfly.server.util;
 
 
 import com.liubs.shadowrpcfly.logging.Logger;
-import com.liubs.shadowrpcfly.base.annotation.ShadowServiceHolder;
+import com.liubs.shadowrpcfly.server.annotation.ShadowServiceHolder;
 
 
 import java.io.IOException;

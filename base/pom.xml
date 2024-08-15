@@ -15,7 +15,7 @@
 
     <dependencies>
 
-
+        <!-- kryo -->
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>

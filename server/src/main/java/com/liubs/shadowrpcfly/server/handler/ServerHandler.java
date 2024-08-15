@@ -2,12 +2,12 @@ package com.liubs.shadowrpcfly.server.handler;
 
 
 import com.liubs.shadowrpcfly.logging.Logger;
-import com.liubs.shadowrpcfly.base.module.ModulePool;
-import com.liubs.shadowrpcfly.protocol.SerializeModule;
+import com.liubs.shadowrpcfly.server.module.ModulePool;
+import com.liubs.shadowrpcfly.server.module.SerializeModule;
 import com.liubs.shadowrpcfly.constant.ResponseCode;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCRequest;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
-import com.liubs.shadowrpcfly.server.ServerModule;
+import com.liubs.shadowrpcfly.server.module.ServerModule;
 import com.liubs.shadowrpcfly.server.service.ServiceLookUp;
 import com.liubs.shadowrpcfly.server.service.ServiceTarget;
 import io.netty.channel.ChannelHandlerContext;
@@ -44,12 +44,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-        // 打印验证影响速度，压测时去掉
-        //logger.info("Server received: " + msg);
-
         ShadowRPCRequest request = (ShadowRPCRequest)msg;
 
-        //System.out.println("Server received: " + requestModel.getParams()[0]);
+
+        // 打印验证影响速度，压测时去掉
+        //logger.info("Server received: " + request.getParams()[0]);
+
         executorService.execute(()->{
             try {
 
@@ -68,7 +68,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
                 // 响应客户端
                 ctx.writeAndFlush(response);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
             }
 

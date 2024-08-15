@@ -1,11 +1,10 @@
 package com.liubs.shadowrpcfly.client.handler;
 
+
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
 
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * @author Liubsyy
@@ -27,17 +26,20 @@ public class ReceiveHolder {
     }
 
     public void deleteWait(String uuid) {
-        futureMap.remove(uuid);
+        CompletableFuture<Object> remove = futureMap.remove(uuid);
+        if(null != remove) {
+            remove.cancel(true);
+        }
     }
 
 
-    public void receiveData(ShadowRPCResponse responseModel){
-        if(null == responseModel.getTraceId()) {
+    public void receiveData(ShadowRPCResponse response){
+        if(null == response.getTraceId()) {
             return;
         }
-        CompletableFuture<Object> future = futureMap.remove(responseModel.getTraceId());
+        CompletableFuture<Object> future = futureMap.remove(response.getTraceId());
         if(null != future) {
-            future.complete(responseModel);
+            future.complete(response);
         }
     }
 

@@ -22,6 +22,12 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- netty -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
 
         <!-- 扫描工具 -->
         <dependency>
@@ -30,21 +36,13 @@
             <version>${reflections.version}</version>
         </dependency>
 
-        <!-- netty -->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>${netty.version}</version>
-        </dependency>
-
-
     </dependencies>
 
     <build>
         <plugins>
 
 
-            <!-- 使用shade插件可以将所有的依赖jar打包到一个jar
+            <!-- 使用shade插件可以将依赖jar打包到一个jar-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -55,10 +53,25 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>io.github.liubsyy:shadowrpcfly-base</include>
+                                    <include>com.esotericsoftware:kryo</include>
+                                </includes>
+                            </artifactSet>
+
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.esotericsoftware</pattern>
+                                    <shadedPattern>com.liubs.shadowrpcfly.server.lib.com.esotericsoftware</shadedPattern>
+                                </relocation>
+
+                            </relocations>
+                        </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
-
+            </plugin>
 
         </plugins>
     </build>
