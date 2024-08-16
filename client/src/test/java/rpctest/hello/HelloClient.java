@@ -92,7 +92,7 @@ public class HelloClient {
 
 
         ShadowMessageListeners.getInstance().<MyMessage>addListener(MyMessage.class,
-                message-> logger.info("收到广播:"+message.getContent()));
+                message-> logger.info("收到消息:"+message.getContent()));
 
         IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
         helloService.helloForBroadcast("请求广播");

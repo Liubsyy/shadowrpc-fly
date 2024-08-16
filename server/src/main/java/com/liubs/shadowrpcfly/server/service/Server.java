@@ -4,7 +4,6 @@ import com.liubs.shadowrpcfly.config.ServerConfig;
 import com.liubs.shadowrpcfly.listener.IShadowMessageListener;
 import com.liubs.shadowrpcfly.logging.Logger;
 import com.liubs.shadowrpcfly.protocol.ShadowMessage;
-import com.liubs.shadowrpcfly.protocol.ShadowRPCRequest;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
 import com.liubs.shadowrpcfly.server.connection.ClientChannels;
 import com.liubs.shadowrpcfly.server.handler.ShadowChannelInitializer;
@@ -13,12 +12,8 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.concurrent.GlobalEventExecutor;
-
 /**
  * @author Liubsyy
  * @date 2023/12/4 11:59 PM
@@ -73,6 +68,11 @@ public class Server {
      * @param msg
      */
     public static void sendMessage(ChannelHandlerContext ctx, Object msg){
+        if(null == ctx){
+            logger.error("当前环境不存在ChannelHandlerContext");
+            return;
+        }
+
         try{
             ShadowRPCResponse response = new ShadowRPCResponse();
             response.setTraceId(IShadowMessageListener.TRACE_ID);
@@ -86,6 +86,11 @@ public class Server {
         }catch (Exception e) {
             logger.error("发送消息失败"+msg,e);
         }
+    }
+
+    public static void sendMessage(Object obj){
+        ChannelHandlerContext ctx = ClientChannels.getContextChannel();
+        sendMessage(ctx,obj);
     }
 
     /**

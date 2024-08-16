@@ -61,6 +61,10 @@ public class HelloService implements IHello {
             }
         }).start();
 
+        MyMessage message = new MyMessage();
+        message.setContent("小道消息：老炮是卧底...");
+        Server.sendMessage(message);
+
         return "等待广播,"+msg;
     }
 
@@ -84,7 +88,12 @@ public class HelloService implements IHello {
 
         //监听消息
         ShadowMessageListeners.getInstance().<MyMessage>addListener(MyMessage.class,
-                message-> logger.info("收到客户端消息:"+message.getContent()));
+                message-> {
+                    logger.info("收到客户端消息:"+message.getContent());
+                    MyMessage reMsg = new MyMessage();
+                    reMsg.setContent("收到支援请求，正在增兵...");
+                    Server.sendMessage(reMsg);
+                });
 
         ServerBuilder.newBuilder()
                 .serverConfig(serverConfig)

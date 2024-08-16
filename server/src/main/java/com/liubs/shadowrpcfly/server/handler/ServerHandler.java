@@ -62,15 +62,23 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         if(request.getTraceId().equals(IShadowMessageListener.TRACE_ID)) {
             messageService.execute(()->{
-                ShadowMessage message = (ShadowMessage)request.getParams()[0];
-                ShadowMessageListeners.getInstance().notifyListener(message.getMessageClass(),message.getObj());
+                try{
+                    ClientChannels.setContextChannel(ctx);
+                    ShadowMessage message = (ShadowMessage)request.getParams()[0];
+                    ShadowMessageListeners.getInstance().notifyListener(message.getMessageClass(),message.getObj());
+                } catch (Throwable e) {
+                    logger.error("Call message err",e);
+                } finally {
+                    ClientChannels.removeContextChannel();
+                }
+
             });
             return;
         }
 
         executorService.execute(()->{
             try {
-
+                ClientChannels.setContextChannel(ctx);
 
                 ServiceLookUp serviceLookUp = new ServiceLookUp();
                 serviceLookUp.setServiceName(request.getServiceName());
@@ -88,7 +96,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 // 响应客户端
                 ctx.writeAndFlush(response);
             } catch (Throwable e) {
-                e.printStackTrace();
+                logger.error("Invoke service err",e);
+            }finally {
+                ClientChannels.removeContextChannel();
             }
 
         });
