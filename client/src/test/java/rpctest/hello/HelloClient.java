@@ -65,7 +65,18 @@ public class HelloClient {
             System.exit(0);
         });
 
-        logger.info("已经发送完消息...");
+        MyMessage message = new MyMessage();
+        message.setNum(100);
+        message.setContent("Hello, Server!");
+
+        ShadowClient.<MyMessage>asyncCall(()->{
+            helloService.say(message);
+            logger.info("message消息发送");
+        },(messageResponse)->{
+            logger.info("message消息响应:"+messageResponse);
+        });
+
+        logger.info("发消息工作已完毕");
         shadowClient.keep();
     }
 
