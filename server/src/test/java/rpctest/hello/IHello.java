@@ -10,6 +10,9 @@ import rpctest.entity.MyMessage;
 @ShadowInterface
 public interface IHello {
     String hello(String msg);
-    String helloSlowly(String msg) throws InterruptedException;
+    String helloSlowly(String msg);
+
+    String helloForBroadcast(String msg);
+
     MyMessage say(MyMessage message);
 }

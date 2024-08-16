@@ -6,6 +6,9 @@ import com.liubs.shadowrpcfly.client.holder.CallBackHolder;
 import com.liubs.shadowrpcfly.client.proxy.RemoteServerProxy;
 import com.liubs.shadowrpcfly.config.ClientConfig;
 import com.liubs.shadowrpcfly.logging.Logger;
+import com.liubs.shadowrpcfly.listener.IShadowMessageListener;
+import com.liubs.shadowrpcfly.protocol.ShadowMessage;
+import com.liubs.shadowrpcfly.protocol.ShadowRPCRequest;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -70,6 +73,23 @@ public class ShadowClient implements IConnection{
     @Override
     public <T> T createRemoteProxy(Class<T> serviceStub, String service) {
         return RemoteServerProxy.create(this,serviceStub,service);
+    }
+
+    @Override
+    public void sendMessage(Object msg) {
+        try{
+            ShadowRPCRequest request = new ShadowRPCRequest();
+            request.setTraceId(IShadowMessageListener.TRACE_ID);
+
+            ShadowMessage message = new ShadowMessage();
+            message.setMessageClass(msg.getClass());
+            message.setObj(msg);
+            request.setParams(new Object[]{message});
+
+            channel.writeAndFlush(request).sync();
+        }catch (Exception e) {
+            logger.error("发送消息失败"+msg,e);
+        }
     }
 
 

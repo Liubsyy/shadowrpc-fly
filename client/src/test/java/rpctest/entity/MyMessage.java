@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @date 2023/12/18 10:58 PM
  **/
 @ShadowEntity
-public class MyMessage implements Serializable {
+public class MyMessage {
 
     @ShadowField(1)
     private String content;

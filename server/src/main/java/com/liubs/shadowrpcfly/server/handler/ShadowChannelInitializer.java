@@ -4,6 +4,7 @@ package com.liubs.shadowrpcfly.server.handler;
 import com.liubs.shadowrpcfly.config.ServerConfig;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
@@ -13,7 +14,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
  **/
 public class ShadowChannelInitializer extends ChannelInitializer<SocketChannel> {
 
-    private ServerConfig serverConfig;
+    private final ServerConfig serverConfig;
 
     public ShadowChannelInitializer(ServerConfig serverConfig) {
         this.serverConfig = serverConfig;

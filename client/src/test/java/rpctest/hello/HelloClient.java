@@ -2,6 +2,7 @@ package rpctest.hello;
 
 import com.liubs.shadowrpcfly.client.connection.ShadowClient;
 import com.liubs.shadowrpcfly.config.ClientConfig;
+import com.liubs.shadowrpcfly.listener.ShadowMessageListeners;
 import com.liubs.shadowrpcfly.logging.Logger;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
@@ -79,6 +80,35 @@ public class HelloClient {
         logger.info("发消息工作已完毕");
         shadowClient.keep();
     }
+
+
+    /**
+     * 监听服务器消息
+     */
+    @Test
+    public void listenMessage() {
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+        shadowClient.init();
+
+
+        ShadowMessageListeners.getInstance().<MyMessage>addListener(MyMessage.class,
+                message-> logger.info("收到广播:"+message.getContent()));
+
+        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
+        helloService.helloForBroadcast("请求广播");
+
+        //向服务器发送消息
+        MyMessage message = new MyMessage();
+        message.setContent("请求支援...");
+        shadowClient.sendMessage(message);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     /**

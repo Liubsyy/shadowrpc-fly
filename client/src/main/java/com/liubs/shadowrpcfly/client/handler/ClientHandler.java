@@ -6,6 +6,9 @@ import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * @author Liubsyy
  * @date 2023/12/3 10:29 PM
@@ -14,7 +17,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter{
     private static final Logger logger = Logger.getLogger(ClientHandler.class);
-
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -29,7 +31,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter{
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    public void channelRead(ChannelHandlerContext ctx, Object msg)  {
         ReceiveHolder.getInstance().receiveData((ShadowRPCResponse) msg);
     }
 

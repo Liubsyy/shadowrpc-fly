@@ -11,5 +11,6 @@ import rpctest.entity.MyMessage;
 public interface IHello {
     String hello(String msg);
     String helloSlowly(String msg);
+    String helloForBroadcast(String msg);
     MyMessage say(MyMessage message);
 }

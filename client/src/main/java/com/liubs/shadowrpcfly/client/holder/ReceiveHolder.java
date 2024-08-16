@@ -1,6 +1,9 @@
 package com.liubs.shadowrpcfly.client.holder;
 
 
+import com.liubs.shadowrpcfly.listener.IShadowMessageListener;
+import com.liubs.shadowrpcfly.listener.ShadowMessageListeners;
+import com.liubs.shadowrpcfly.protocol.ShadowMessage;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
 
 import java.util.Map;
@@ -12,6 +15,11 @@ import java.util.concurrent.*;
  **/
 public class ReceiveHolder {
     public Map<String, CompletableFuture<Object>> futureMap = new ConcurrentHashMap<>();
+
+
+    private static ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    private static ExecutorService messageService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
 
     private static ReceiveHolder instance = new ReceiveHolder();
     public static ReceiveHolder getInstance() {
@@ -37,12 +45,23 @@ public class ReceiveHolder {
         if(null == response.getTraceId()) {
             return;
         }
-        CompletableFuture<Object> future = futureMap.remove(response.getTraceId());
-        if(null != future) {
-            future.complete(response);
-        }else {
-            CallBackHolder.getInstance().asyncCallBack(response);
+        if(response.getTraceId().equals(IShadowMessageListener.TRACE_ID)) {
+            messageService.execute(()->{
+                ShadowMessage message = (ShadowMessage)response.getResult();
+                ShadowMessageListeners.getInstance().notifyListener(message.getMessageClass(),message.getObj());
+            });
+            return;
         }
+
+        CompletableFuture<Object> future = futureMap.remove(response.getTraceId());
+        executorService.execute(()->{
+            if(null != future) {
+                future.complete(response);
+            }else {
+                CallBackHolder.getInstance().asyncCallBack(response);
+            }
+        });
+
     }
 
 }
