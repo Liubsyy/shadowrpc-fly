@@ -21,6 +21,9 @@
             <artifactId>kryo</artifactId>
             <version>${kryo.version}</version>
         </dependency>
+
+
+
     </dependencies>
 
 </project>

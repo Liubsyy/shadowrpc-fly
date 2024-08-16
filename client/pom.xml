@@ -22,8 +22,8 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- netty -->
         <dependency>
+
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>${netty.version}</version>
@@ -81,7 +81,6 @@
             </exclusions>
         </dependency>
 
-
     </dependencies>
 
     <build>
@@ -111,6 +110,8 @@
                                 </relocation>
                             </relocations>
                         </configuration>
+
+
                     </execution>
                 </executions>
             </plugin>

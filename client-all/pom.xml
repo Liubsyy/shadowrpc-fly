@@ -37,6 +37,17 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar> <!-- 启用最小化依赖 -->
+
+                            <filters>
+                                <filter>
+                                    <artifact>io.github.liubsyy:shadowrpcfly-client</artifact>
+                                    <includes>
+                                        <include>**/*</include> <!-- 包含client及其所有依赖的所有类和资源 -->
+                                    </includes>
+                                </filter>
+                            </filters>
+
+
                             <relocations>
                                 <relocation>
                                     <pattern>io.netty</pattern>
