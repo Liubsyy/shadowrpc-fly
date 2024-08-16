@@ -47,6 +47,30 @@ public class HelloClient {
     }
 
     /**
+     * 异步调用hello
+     */
+    @Test
+    public void helloClientAsync() {
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+        shadowClient.init();
+
+
+        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
+
+        ShadowClient.asyncCall(()->{
+            helloService.helloSlowly("Tom");
+            logger.info("发送 hello 消息");
+        },(helloResponse)->{
+            logger.info("hello 服务端响应:"+helloResponse);
+            System.exit(0);
+        });
+
+        logger.info("已经发送完消息...");
+        shadowClient.keep();
+    }
+
+
+    /**
      * 并发调用，测试拆包和粘包的可靠性
      */
     @Test

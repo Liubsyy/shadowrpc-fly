@@ -1,4 +1,4 @@
-package com.liubs.shadowrpcfly.client.handler;
+package com.liubs.shadowrpcfly.client.holder;
 
 
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
@@ -40,6 +40,8 @@ public class ReceiveHolder {
         CompletableFuture<Object> future = futureMap.remove(response.getTraceId());
         if(null != future) {
             future.complete(response);
+        }else {
+            CallBackHolder.getInstance().asyncCallBack(response);
         }
     }
 

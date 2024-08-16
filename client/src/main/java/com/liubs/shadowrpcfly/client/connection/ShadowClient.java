@@ -1,6 +1,8 @@
 package com.liubs.shadowrpcfly.client.connection;
 
+import com.liubs.shadowrpcfly.AsyncCall;
 import com.liubs.shadowrpcfly.client.handler.ShadowChannelInitializer;
+import com.liubs.shadowrpcfly.client.holder.CallBackHolder;
 import com.liubs.shadowrpcfly.client.proxy.RemoteServerProxy;
 import com.liubs.shadowrpcfly.config.ClientConfig;
 import com.liubs.shadowrpcfly.logging.Logger;
@@ -10,6 +12,8 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+
+import java.util.function.Consumer;
 
 /**
  * 一个远程连接源，每一个远程服务器节点，即为一个ShadowClient实例
@@ -66,6 +70,22 @@ public class ShadowClient implements IConnection{
     @Override
     public <T> T createRemoteProxy(Class<T> serviceStub, String service) {
         return RemoteServerProxy.create(this,serviceStub,service);
+    }
+
+
+    /**
+     * 异步调用
+     * @param asyncCall 处理远程调用
+     * @param callBack 回调函数，为null则为同步调用且不回调
+     * @param <T>
+     */
+    public static <T> void asyncCall(AsyncCall asyncCall, Consumer<T> callBack) {
+        try{
+            CallBackHolder.setCurrentCallBack(callBack);
+            asyncCall.run();
+        }finally {
+            CallBackHolder.removeCurrentCallBack();
+        }
     }
 
 

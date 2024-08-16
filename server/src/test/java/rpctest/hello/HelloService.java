@@ -21,6 +21,12 @@ public class HelloService implements IHello {
     }
 
     @Override
+    public String helloSlowly(String msg) throws InterruptedException {
+        Thread.sleep(3000);
+        return "Slowly hello,"+msg;
+    }
+
+    @Override
     public MyMessage say(MyMessage message) {
         MyMessage message1 = new MyMessage();
         message1.setContent("hello received "+"("+message.getContent()+")");

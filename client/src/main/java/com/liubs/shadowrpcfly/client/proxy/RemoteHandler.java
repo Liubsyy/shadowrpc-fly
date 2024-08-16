@@ -1,7 +1,8 @@
 package com.liubs.shadowrpcfly.client.proxy;
 
 import com.liubs.shadowrpcfly.client.connection.IConnection;
-import com.liubs.shadowrpcfly.client.handler.ReceiveHolder;
+import com.liubs.shadowrpcfly.client.holder.CallBackHolder;
+import com.liubs.shadowrpcfly.client.holder.ReceiveHolder;
 import com.liubs.shadowrpcfly.logging.Logger;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCRequest;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Consumer;
 
 /**
  * @author Liubsyy
@@ -42,6 +44,9 @@ public class RemoteHandler implements InvocationHandler {
      */
     private String serviceName;
 
+
+
+
     public RemoteHandler(IConnection client, Class<?> serviceStub, String group,String serviceName) {
         this.clientConnection = client;
         this.serviceStub = serviceStub;
@@ -68,12 +73,18 @@ public class RemoteHandler implements InvocationHandler {
                 return null;
             }
 
-            Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
+            Consumer<Object> callBack = CallBackHolder.getCurrentCallBack();
+            Future<?> future = null == callBack ? ReceiveHolder.getInstance().initFuture(traceId) : null;
             try{
                 channel.writeAndFlush(request).sync();
             }catch (Exception e) {
                 logger.error("发送请求{}失败",traceId);
                 ReceiveHolder.getInstance().deleteWait(traceId);
+                return null;
+            }
+            if(null != callBack) {
+                //异步函数直接等待回调用
+                CallBackHolder.getInstance().addCallBack(traceId,callBack);
                 return null;
             }
 
