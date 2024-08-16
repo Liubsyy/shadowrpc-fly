@@ -13,13 +13,12 @@
     <artifactId>shadowrpcfly-client</artifactId>
     <version>1.0.0</version>
 
-
     <dependencies>
 
         <dependency>
             <groupId>io.github.liubsyy</groupId>
             <artifactId>shadowrpcfly-base</artifactId>
-            <version>1.0.0</version>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -98,21 +97,18 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <minimizeJar>true</minimizeJar> <!-- 启用最小化依赖 -->
+                            <artifactSet>
+                                <includes>
+                                    <include>io.github.liubsyy:shadowrpcfly-base</include>
+                                    <include>com.esotericsoftware:kryo</include>
+                                </includes>
+                            </artifactSet>
+
                             <relocations>
-                                <relocation>
-                                    <pattern>io.netty</pattern>
-                                    <shadedPattern>com.liubs.shadowrpcfly.client.lib.io.netty</shadedPattern>
-                                </relocation>
                                 <relocation>
                                     <pattern>com.esotericsoftware</pattern>
                                     <shadedPattern>com.liubs.shadowrpcfly.client.lib.com.esotericsoftware</shadedPattern>
                                 </relocation>
-                                <relocation>
-                                    <pattern>org.objenesis</pattern>
-                                    <shadedPattern>com.liubs.shadowrpcfly.client.lib.org.objenesis</shadedPattern>
-                                </relocation>
-
                             </relocations>
                         </configuration>
                     </execution>

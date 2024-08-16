@@ -10,39 +10,21 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>shadowrpcfly-server</artifactId>
+    <artifactId>shadowrpcfly-client-all</artifactId>
+    <version>1.0.0</version>
 
     <dependencies>
-
-
         <dependency>
             <groupId>io.github.liubsyy</groupId>
-            <artifactId>shadowrpcfly-base</artifactId>
-            <version>1.0</version>
+            <artifactId>shadowrpcfly-client</artifactId>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
-
-        <!-- netty -->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>${netty.version}</version>
-        </dependency>
-
-        <!-- 扫描工具 -->
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>${reflections.version}</version>
-        </dependency>
-
     </dependencies>
 
+    <!-- 将client和依赖的包都打包到一起 -->
     <build>
         <plugins>
-
-
-            <!-- 使用shade插件可以将依赖jar打包到一个jar-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -54,24 +36,25 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>io.github.liubsyy:shadowrpcfly-base</include>
-                                    <include>com.esotericsoftware:kryo</include>
-                                </includes>
-                            </artifactSet>
-
+                            <minimizeJar>true</minimizeJar> <!-- 启用最小化依赖 -->
                             <relocations>
                                 <relocation>
+                                    <pattern>io.netty</pattern>
+                                    <shadedPattern>com.liubs.shadowrpcfly.client.lib.io.netty</shadedPattern>
+                                </relocation>
+                                <relocation>
                                     <pattern>com.esotericsoftware</pattern>
-                                    <shadedPattern>com.liubs.shadowrpcfly.server.lib.com.esotericsoftware</shadedPattern>
+                                    <shadedPattern>com.liubs.shadowrpcfly.client.lib.com.esotericsoftware</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.objenesis</pattern>
+                                    <shadedPattern>com.liubs.shadowrpcfly.client.lib.org.objenesis</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
