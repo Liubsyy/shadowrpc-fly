@@ -1,22 +1,26 @@
 package com.liubs.shadowrpcfly.client.handler;
 
 import com.liubs.shadowrpcfly.client.holder.ReceiveHolder;
+import com.liubs.shadowrpcfly.config.ClientConfig;
 import com.liubs.shadowrpcfly.logging.Logger;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author Liubsyy
  * @date 2023/12/3 10:29 PM
  **/
-
-
 public class ClientHandler extends ChannelInboundHandlerAdapter{
     private static final Logger logger = Logger.getLogger(ClientHandler.class);
+
+    private ClientConfig config;
+
+    public ClientHandler(ClientConfig config) {
+        this.config = config;
+        ReceiveHolder.initExecutor(config);
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -34,7 +38,6 @@ public class ClientHandler extends ChannelInboundHandlerAdapter{
     public void channelRead(ChannelHandlerContext ctx, Object msg)  {
         ReceiveHolder.getInstance().receiveData((ShadowRPCResponse) msg);
     }
-
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {

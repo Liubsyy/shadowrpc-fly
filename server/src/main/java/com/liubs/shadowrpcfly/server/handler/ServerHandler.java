@@ -1,6 +1,7 @@
 package com.liubs.shadowrpcfly.server.handler;
 
 
+import com.liubs.shadowrpcfly.config.ServerConfig;
 import com.liubs.shadowrpcfly.listener.IShadowMessageListener;
 import com.liubs.shadowrpcfly.listener.ShadowMessageListeners;
 import com.liubs.shadowrpcfly.logging.Logger;
@@ -28,14 +29,29 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ServerHandler.class);
     private static final int AVAILABLE_PROCESSORS = Runtime.getRuntime().availableProcessors();
 
-    private static ExecutorService executorService
-            = new ThreadPoolExecutor(32, 32,60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+    private static ExecutorService executorService;
+
     private static ExecutorService messageService = Executors.newFixedThreadPool(20);
 
     private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
     private ServerModule serverModule = ModulePool.getModule(ServerModule.class);
 
 
+    public ServerHandler() {
+        if(null ==executorService){
+            synchronized (ServerHandler.class) {
+                if(null == executorService) {
+                    ServerConfig serverConfig = serverModule.getServerConfig();
+                    executorService = new ThreadPoolExecutor(serverConfig.getServerHandleCorePoolSize(),
+                            serverConfig.getServerHandleMaxPoolSize(),
+                            serverConfig.getServerHandleKeepAliveSeconds(), TimeUnit.SECONDS,
+                            new LinkedBlockingQueue<>(serverConfig.getServerHandleMaxPoolSize()));
+                    messageService = Executors.newFixedThreadPool(serverConfig.getMessagePoolSize());
+                }
+            }
+        }
+
+    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {

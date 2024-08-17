@@ -21,6 +21,9 @@ public class BaseConfig {
     //心跳时间间隔(默认10s)
     private int heartBeatWaitSeconds = 10;
 
+    //监听消息逻辑线程池大小
+    private int messagePoolSize=64;
+
     public String getSerializer() {
         return serializer;
     }
@@ -51,5 +54,13 @@ public class BaseConfig {
 
     public void setHeartBeatWaitSeconds(int heartBeatWaitSeconds) {
         this.heartBeatWaitSeconds = heartBeatWaitSeconds;
+    }
+
+    public int getMessagePoolSize() {
+        return messagePoolSize;
+    }
+
+    public void setMessagePoolSize(int messagePoolSize) {
+        this.messagePoolSize = messagePoolSize;
     }
 }

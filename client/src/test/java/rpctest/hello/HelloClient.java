@@ -178,7 +178,7 @@ public class HelloClient {
 
 
         //Mac 2.2 GHz 四核Intel Core i7 内存 16G
-        //100w个请求，25.8s 平均QPS=3.87w 最大qps=4.96w
+        //100w个请求，23.8s 平均QPS=4.2w 最大qps=5.4w
         long time1 = System.currentTimeMillis();
         executorService.invokeAll(futureTaskList);
         long time2 = System.currentTimeMillis();

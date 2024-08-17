@@ -20,6 +20,18 @@ public class ServerConfig extends BaseConfig {
     //qps统计开关
     private boolean qpsStat;
 
+    //服务端处理核心线程
+    private int serverHandleCorePoolSize = 32;
+
+    //服务端处理最大线程
+    private int serverHandleMaxPoolSize = 64;
+
+    //服务端处理线程存活时间：秒
+    private int serverHandleKeepAliveSeconds=60;
+
+    //服务端处理队列长度
+    private int serverHandleQueueSize=100000;
+
 
     public String getGroup() {
         return group;
@@ -59,5 +71,37 @@ public class ServerConfig extends BaseConfig {
             throw new ConfigFieldMissException("group未配置");
         }
         return true;
+    }
+
+    public int getServerHandleCorePoolSize() {
+        return serverHandleCorePoolSize;
+    }
+
+    public void setServerHandleCorePoolSize(int serverHandleCorePoolSize) {
+        this.serverHandleCorePoolSize = serverHandleCorePoolSize;
+    }
+
+    public int getServerHandleMaxPoolSize() {
+        return serverHandleMaxPoolSize;
+    }
+
+    public void setServerHandleMaxPoolSize(int serverHandleMaxPoolSize) {
+        this.serverHandleMaxPoolSize = serverHandleMaxPoolSize;
+    }
+
+    public int getServerHandleKeepAliveSeconds() {
+        return serverHandleKeepAliveSeconds;
+    }
+
+    public void setServerHandleKeepAliveSeconds(int serverHandleKeepAliveSeconds) {
+        this.serverHandleKeepAliveSeconds = serverHandleKeepAliveSeconds;
+    }
+
+    public int getServerHandleQueueSize() {
+        return serverHandleQueueSize;
+    }
+
+    public void setServerHandleQueueSize(int serverHandleQueueSize) {
+        this.serverHandleQueueSize = serverHandleQueueSize;
     }
 }
