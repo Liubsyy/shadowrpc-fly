@@ -1,6 +1,7 @@
 package com.liubs.shadowrpcfly.server.service;
 
-import java.lang.reflect.InvocationTargetException;
+import net.sf.cglib.reflect.FastClass;
+
 import java.lang.reflect.Method;
 
 /**
@@ -8,8 +9,17 @@ import java.lang.reflect.Method;
  * @date 2023/12/28
  **/
 public class ServiceTarget {
+    private FastClass fastClass;
     private Object targetObj;
     private Method method;
+    private final int methodIndex;
+
+    public ServiceTarget(Object targetObj, Method method) {
+        this.targetObj = targetObj;
+        this.method = method;
+        this.fastClass = FastClass.create(targetObj.getClass());
+        this.methodIndex = fastClass.getIndex(method.getName(), method.getParameterTypes());
+    }
 
     public Object getTargetObj() {
         return targetObj;
@@ -27,7 +37,13 @@ public class ServiceTarget {
         this.method = method;
     }
 
-    public Object invoke(Object [] params) throws InvocationTargetException, IllegalAccessException {
-        return method.invoke(targetObj,params);
+    public Object call(Object [] params) throws Throwable {
+
+        // 使用cglib代理
+        return fastClass.invoke(methodIndex, targetObj, params);
+
+//        return method.invoke(targetObj,params);
     }
+
+
 }

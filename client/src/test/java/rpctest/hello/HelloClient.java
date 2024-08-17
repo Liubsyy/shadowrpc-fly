@@ -141,7 +141,7 @@ public class HelloClient {
         //预热
         ExecutorService executorService = new ThreadPoolExecutor(100, 100,
                 3, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-        for(int i = 0;i<10000;i++) {
+        for(int i = 0;i<100000;i++) {
             final int j = i;
             futureTaskList.add(()->{
                 MyMessage message = new MyMessage();
@@ -175,7 +175,8 @@ public class HelloClient {
         }
 
 
-        //100w个请求，25.8s
+        //Mac 2.2 GHz 四核Intel Core i7 内存 16G
+        //100w个请求，25.8s 平均QPS=3.87w 最大qps=4.96w
         long time1 = System.currentTimeMillis();
         executorService.invokeAll(futureTaskList);
         long time2 = System.currentTimeMillis();

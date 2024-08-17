@@ -82,10 +82,8 @@ public class ServerModule implements IModule {
                     serviceLookUp.setMethodName(method.getName());
                     serviceLookUp.setParamTypes(method.getParameterTypes());
 
-                    ServiceTarget serviceTarget = new ServiceTarget();
-                    serviceTarget.setTargetObj(o);
-                    serviceTarget.setMethod(method);
-                    addRPCInterface(serviceLookUp,serviceTarget);
+                    ServiceTarget serviceTarget = new ServiceTarget(o,method);
+                    this.addRPCInterface(serviceLookUp,serviceTarget);
                 }
 
             } catch (InstantiationException | IllegalAccessException e) {

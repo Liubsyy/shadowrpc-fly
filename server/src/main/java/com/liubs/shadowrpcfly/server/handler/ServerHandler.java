@@ -85,7 +85,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 serviceLookUp.setParamTypes(request.getParamTypes());
 
                 ServiceTarget targetRPC = serverModule.getRPC(serviceLookUp);
-                Object result = targetRPC.invoke(request.getParams());
+                Object result = targetRPC.call(request.getParams());
 
                 ShadowRPCResponse response = new ShadowRPCResponse();
                 response.setTraceId(request.getTraceId());
