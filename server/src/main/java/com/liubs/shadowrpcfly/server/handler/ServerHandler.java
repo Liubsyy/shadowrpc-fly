@@ -28,8 +28,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ServerHandler.class);
     private static final int AVAILABLE_PROCESSORS = Runtime.getRuntime().availableProcessors();
 
-    private static ExecutorService executorService = new ThreadPoolExecutor(AVAILABLE_PROCESSORS*2, AVAILABLE_PROCESSORS*2,3, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-    private static ExecutorService messageService = Executors.newFixedThreadPool(AVAILABLE_PROCESSORS);
+    private static ExecutorService executorService
+            = new ThreadPoolExecutor(32, 32,60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+    private static ExecutorService messageService = Executors.newFixedThreadPool(20);
 
     private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
     private ServerModule serverModule = ModulePool.getModule(ServerModule.class);

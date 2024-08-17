@@ -16,10 +16,8 @@ import java.util.concurrent.*;
 public class ReceiveHolder {
     public Map<String, CompletableFuture<Object>> futureMap = new ConcurrentHashMap<>();
 
-
-    private static ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-    private static ExecutorService messageService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
+    private static ExecutorService executorService = Executors.newFixedThreadPool(20);
+    private static ExecutorService messageService = Executors.newFixedThreadPool(20);
 
     private static ReceiveHolder instance = new ReceiveHolder();
     public static ReceiveHolder getInstance() {
