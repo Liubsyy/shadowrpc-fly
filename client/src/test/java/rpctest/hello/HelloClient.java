@@ -9,9 +9,8 @@ import rpctest.entity.MyMessage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Liubsyy
@@ -32,7 +31,7 @@ public class HelloClient {
         shadowClient.init();
 
 
-        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
+        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"helloservice");
 
         logger.info("发送 hello 消息");
         String helloResponse = helloService.hello("Tom");
@@ -56,9 +55,9 @@ public class HelloClient {
         shadowClient.init();
 
 
-        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
+        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"helloservice");
 
-        ShadowClient.asyncCall(()->{
+        ShadowClient.<String>asyncCall(()->{
             helloService.helloSlowly("Tom");
             logger.info("发送 hello 消息");
         },(helloResponse)->{
@@ -94,7 +93,7 @@ public class HelloClient {
         ShadowMessageListeners.getInstance().<MyMessage>addListener(MyMessage.class,
                 message-> logger.info("收到消息:"+message.getContent()));
 
-        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
+        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"helloservice");
         helloService.helloForBroadcast("请求广播");
 
         //向服务器发送消息
@@ -116,20 +115,47 @@ public class HelloClient {
      */
     @Test
     public void helloConcurrent() throws InterruptedException {
+
+        //每秒请求量统计
+        AtomicInteger perSecondsRequests = new AtomicInteger(0);
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(() -> {
+            int qps = perSecondsRequests.getAndSet(0);
+            if(qps > 0) {
+                logger.info("Current Request: " + qps);
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+
         ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
         shadowClient.init();
 
         //调用远程RPC接口
-        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
+        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"helloservice");
 
         System.out.println("发送 hello 消息");
         String helloResponse = helloService.hello("Tom");
         System.out.println("hello 服务端响应:"+helloResponse);
 
-        long time1 = System.currentTimeMillis();
         List<Callable<String>> futureTaskList = new ArrayList<>();
 
-        //100w个请求，27s
+        //预热
+        ExecutorService executorService = new ThreadPoolExecutor(100, 100,
+                3, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+        for(int i = 0;i<10000;i++) {
+            final int j = i;
+            futureTaskList.add(()->{
+                MyMessage message = new MyMessage();
+                message.setNum(j);
+                message.setContent(String.valueOf(j));
+                helloService.say(message);
+                return "success";
+            });
+        }
+        executorService.invokeAll(futureTaskList);
+        futureTaskList.clear();
+
+
+        //正式并发测试
         final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;
@@ -138,9 +164,9 @@ public class HelloClient {
                 message.setNum(j);
                 message.setContent("Hello, Server!");
 
-
                 //打印消息影响速度，去掉打印至少快一倍
                 //System.out.printf("发送请求%d \n",j);
+                perSecondsRequests.incrementAndGet();
                 MyMessage response = helloService.say(message);
                 //System.out.printf("接收服务端消息%d \n",j);
 
@@ -148,12 +174,13 @@ public class HelloClient {
             });
         }
 
-        ExecutorService executorService = Executors.newFixedThreadPool(50);
+
+        //100w个请求，25.8s
+        long time1 = System.currentTimeMillis();
         executorService.invokeAll(futureTaskList);
         long time2 = System.currentTimeMillis();
-
         long useMs = (time2-time1);
-        System.out.println("总共用时: "+useMs+" ms");
+        logger.info("总共用时: "+useMs+" ms");
 
         executorService.shutdownNow();
         shadowClient.close();

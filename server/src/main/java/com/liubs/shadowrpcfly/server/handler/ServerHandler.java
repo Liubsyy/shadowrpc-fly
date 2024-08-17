@@ -16,11 +16,9 @@ import com.liubs.shadowrpcfly.server.service.ServiceLookUp;
 import com.liubs.shadowrpcfly.server.service.ServiceTarget;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.group.ChannelGroup;
 
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * @author Liubsyy
@@ -28,9 +26,10 @@ import java.util.concurrent.Executors;
  **/
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ServerHandler.class);
+    private static final int AVAILABLE_PROCESSORS = Runtime.getRuntime().availableProcessors();
 
-    private static ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-    private static ExecutorService messageService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    private static ExecutorService executorService = new ThreadPoolExecutor(AVAILABLE_PROCESSORS*2, AVAILABLE_PROCESSORS*2,3, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+    private static ExecutorService messageService = Executors.newFixedThreadPool(AVAILABLE_PROCESSORS);
 
     private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
     private ServerModule serverModule = ModulePool.getModule(ServerModule.class);
@@ -110,7 +109,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         // 异常处理
        logger.error("exceptionCaught",cause);
-        ctx.close();
+       ctx.close();
     }
 
 

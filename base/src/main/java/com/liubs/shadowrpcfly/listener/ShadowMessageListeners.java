@@ -21,10 +21,10 @@ public class ShadowMessageListeners {
         return instance;
     }
 
-    public <T> ShadowMessageListeners addListener(final Class<?> message, IShadowMessageListener<T> consumer){
+    public <T> ShadowMessageListeners addListener(final Class<?> message, IShadowMessageListener<T> listener){
         synchronized (message) {
             List<IShadowMessageListener<Object>> consumers = listenersMap.computeIfAbsent(message, k -> new ArrayList<>());
-            consumers.add((IShadowMessageListener<Object>)consumer);
+            consumers.add((IShadowMessageListener<Object>)listener);
         }
         return this;
     }

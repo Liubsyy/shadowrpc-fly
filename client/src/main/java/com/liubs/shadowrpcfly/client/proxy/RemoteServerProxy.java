@@ -42,17 +42,15 @@ public class RemoteServerProxy {
                         throw new RuntimeException("服务未找到 @shadowInterface注解");
                     }
 
-                    String[] serviceArr = service.replace("shadowrpc://","").split("/");
-                    if(serviceArr.length < 2) {
-                        throw new IllegalArgumentException("service参数不符合规范");
-                    }
-                    String group = serviceArr[0];
-                    String serviceName = serviceArr[1];
+//                    String[] serviceArr = service.replace("shadowrpc://","").split("/");
+//                    if(serviceArr.length < 2) {
+//                        throw new IllegalArgumentException("service参数不符合规范");
+//                    }
 
                     proxyInstance = Proxy.newProxyInstance(
                             serviceStub.getClassLoader(),
                             new Class<?>[]{serviceStub},
-                            new RemoteHandler(connection,serviceStub,group,serviceName)
+                            new RemoteHandler(connection,serviceStub,"DefaultGroup", service)
                     );
                 }
             }
