@@ -2,7 +2,7 @@
 
 基于netty的精简版高性能rpc框架，由[ShadowRPC](https://github.com/Liubsyy/ShadowRPC) 精简而来。
 
-本rpc框架只做client-server点到点通信，移除了ShadowRPC的集群模式以及protobuf通信。
+本rpc框架只做client-server点到点通信，移除了ShadowRPC的集群模式和protobuf序列化等模块，只保留精简的netty+kryo。
 
 ## 主要模块
 - client : 客户端，基于netty+kryo
