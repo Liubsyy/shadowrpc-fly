@@ -103,7 +103,10 @@
                                 </includes>
                             </artifactSet>
 
+
                             <relocations>
+
+                                <!-- 修改了kryo源码，避免冲突先换个包名 -->
                                 <relocation>
                                     <pattern>com.esotericsoftware</pattern>
                                     <shadedPattern>com.liubs.shadowrpcfly.client.lib.com.esotericsoftware</shadedPattern>
