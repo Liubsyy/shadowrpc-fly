@@ -20,9 +20,4 @@ public @interface ShadowService {
      */
     String serviceName();
 
-    /**
-     * 是否同步调用
-     */
-    boolean sync() default true;
-
 }

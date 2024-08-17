@@ -19,6 +19,9 @@ public class HelloService implements IHello {
     private static final Logger logger = Logger.getLogger(HelloService.class);
 
 
+    public void test(){
+        throw new RuntimeException("此函数不会被客户端检测到，也无法调用");
+    }
 
     @Override
     public String hello(String msg) {

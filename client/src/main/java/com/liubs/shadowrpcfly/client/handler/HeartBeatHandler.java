@@ -16,7 +16,7 @@ public class HeartBeatHandler extends IdleStateHandler {
     private static final Logger logger = Logger.getLogger(HeartBeatHandler.class);
 
     public HeartBeatHandler(int heartBeatWaitSeconds) {
-        super(0, 0, 3);
+        super(0, 0, heartBeatWaitSeconds);
     }
 
 

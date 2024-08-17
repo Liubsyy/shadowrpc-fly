@@ -17,6 +17,9 @@ public class ServerBuilder {
 
     private ServerBuilder(){
         packages = new ArrayList<>();
+
+        //内核包的自带服务
+        packages.add("com.liubs.shadowrpcfly");
     }
 
     public static ServerBuilder newBuilder(){

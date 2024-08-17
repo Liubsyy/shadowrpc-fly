@@ -1,5 +1,6 @@
 package com.liubs.shadowrpcfly.server.module;
 
+import com.liubs.shadowrpcfly.annotation.ShadowInterface;
 import com.liubs.shadowrpcfly.server.annotation.ModuleInject;
 import com.liubs.shadowrpcfly.server.annotation.ShadowModule;
 import com.liubs.shadowrpcfly.server.annotation.ShadowService;
@@ -15,9 +16,11 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author Liubsyy
@@ -54,10 +57,23 @@ public class ServerModule implements IModule {
             try {
                 Object o = serviceClass.newInstance();
 
+                List<Class<?>> shadowInterfaces = Arrays.stream(serviceClass.getInterfaces())
+                        .filter(c -> c.getAnnotation(ShadowInterface.class) != null)
+                        .collect(Collectors.toList());
 
                 for(Method method : serviceClass.getMethods()) {
 
                     if(Modifier.isStatic(method.getModifiers()) || !Modifier.isPublic(method.getModifiers())){
+                        continue;
+                    }
+                    boolean existInterface = false;
+                    for(Class<?> shadowInterface : shadowInterfaces) {
+                        try {
+                            shadowInterface.getMethod(method.getName(),method.getParameterTypes());
+                            existInterface = true;
+                        } catch (NoSuchMethodException e) {}
+                    }
+                    if(!existInterface) {
                         continue;
                     }
 

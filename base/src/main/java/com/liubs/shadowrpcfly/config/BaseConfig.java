@@ -12,10 +12,11 @@ public class BaseConfig {
     private String serializer = SerializerEnum.KRYO.name();
 
     //协议包最大上限(字节)
-    private int maxFrameLength = 65535;
+//    private int maxFrameLength = 65535;
+    private int maxFrameLength = 5*1024*1024;
 
     //心跳开关
-    private boolean heartBeat = true;
+    private boolean heartBeat = false;
 
     //心跳时间间隔(默认10s)
     private int heartBeatWaitSeconds = 10;
