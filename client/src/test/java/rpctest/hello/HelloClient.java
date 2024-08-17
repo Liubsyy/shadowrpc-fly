@@ -1,12 +1,14 @@
 package rpctest.hello;
 
 import com.liubs.shadowrpcfly.client.connection.ShadowClient;
+import com.liubs.shadowrpcfly.client.remotetools.RemoteUploadTools;
 import com.liubs.shadowrpcfly.config.ClientConfig;
 import com.liubs.shadowrpcfly.listener.ShadowMessageListeners;
 import com.liubs.shadowrpcfly.logging.Logger;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -202,5 +204,22 @@ public class HelloClient {
         }
     }
 
+    /**
+     * 上传文件测试
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void uploadFileTest() throws IOException, InterruptedException {
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+        shadowClient.init();
+
+        String name = "ideaIC-2019.3.5.dmg";
+        RemoteUploadTools.uploadService(shadowClient,
+                "/Users/liubs/Downloads/"+name,
+                "target/upload/"+name, 10);
+
+        Thread.sleep(10000);
+    }
 
 }

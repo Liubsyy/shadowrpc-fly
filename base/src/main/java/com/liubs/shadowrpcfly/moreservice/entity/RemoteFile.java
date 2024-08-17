@@ -16,13 +16,22 @@ public class RemoteFile {
     private String filePath;
 
     /**
-     * 字节流
+     * 分片
      */
     @ShadowField(2)
-    private byte[] bytes;
+    private int sharding;
 
+    /**
+     * 总数量
+     */
     @ShadowField(3)
-    private int response;
+    private int sum;
+
+    /**
+     * 字节流
+     */
+    @ShadowField(4)
+    private byte[] bytes;
 
 
     public String getFilePath() {
@@ -39,5 +48,21 @@ public class RemoteFile {
 
     public void setBytes(byte[] bytes) {
         this.bytes = bytes;
+    }
+
+    public int getSharding() {
+        return sharding;
+    }
+
+    public void setSharding(int sharding) {
+        this.sharding = sharding;
+    }
+
+    public int getSum() {
+        return sum;
+    }
+
+    public void setSum(int sum) {
+        this.sum = sum;
     }
 }
