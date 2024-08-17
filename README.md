@@ -134,7 +134,6 @@ ShadowClient.<String>asyncCall(()->{
         logger.info("发送 hello 消息");
     },(helloResponse)->{
         logger.info("hello 服务端响应:"+helloResponse);
-        System.exit(0);
     });
 ```
 
