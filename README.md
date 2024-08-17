@@ -16,6 +16,8 @@
 
 ## 快速使用
 
+> 以下例子在client和server模块中都有单侧，可直接跑单测学习使用
+
 ### 1. 服务的定义
 
 #### 1.1 定义实体
@@ -124,7 +126,7 @@ MyMessage response = helloService.say(message);
 
 #### 异步调用接口
 使用 ShadowClient.asyncCall(AsyncCall asyncCall, Consumer<T> callBack) 异步调用远程服务
-asyncCall中写调用远程逻辑，callBack回调函数
+asyncCall中写调用远程逻辑，callBack中写回调函数
 
 ```java
 ShadowClient.<String>asyncCall(()->{
