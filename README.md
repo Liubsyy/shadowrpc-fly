@@ -1,6 +1,6 @@
 # shadowrpc-fly
 
-基于netty的精简版高性能rpc框架，由[ShadowRPC](https://github.com/Liubsyy/ShadowRPC) 精简而来。
+基于netty点到点全双工通信的高性能精简rpc框架，由[ShadowRPC](https://github.com/Liubsyy/ShadowRPC) 精简而来。
 
 本rpc框架只做client-server点到点通信，移除了ShadowRPC的集群模式和protobuf序列化等模块，只保留精简的netty+kryo。
 
