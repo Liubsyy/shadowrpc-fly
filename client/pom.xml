@@ -10,8 +10,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+
     <artifactId>shadowrpcfly-client</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
 
     <dependencies>
 

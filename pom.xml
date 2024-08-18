@@ -9,14 +9,19 @@
     <version>1.0</version>
     <packaging>pom</packaging>
 
+    <name>shadowrpc-fly</name>
+    <url>https://github.com/Liubsyy/shadowrpc-fly</url>
+    <description>shadowrpc-fly</description>
+
+
+
     <modules>
         <module>base</module>
         <module>client</module>
         <module>client-all</module>
         <module>server</module>
-
-
     </modules>
+
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -31,16 +36,40 @@
         <cglib.version>3.3.0</cglib.version>
 
         <!-- build version -->
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
     </properties>
 
 
+    <!-- 许可证信息 -->
+    <licenses>
+        <!-- GNU许可证 -->
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://github.com/Liubsyy/shadowrpc-fly/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+    <!-- SCM信息 -> 在github上托管 -->
+    <scm>
+        <connection>https://github.com/Liubsyy/shadowrpc-fly</connection>
+        <developerConnection>https://github.com/Liubsyy/shadowrpc-fly.git</developerConnection>
+        <url>https://github.com/Liubsyy/shadowrpc-fly</url>
+    </scm>
+    <!-- 开发者信息 -->
+    <developers>
+        <developer>
+            <name>Liubsyy</name>
+            <email>liubsyy@gmail.com</email>
+            <url>https://github.com/Liubsyy</url>
+            <roles>
+                <role>Admin</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
 
     <dependencies>
-
-
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -53,11 +82,13 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
