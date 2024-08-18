@@ -95,8 +95,7 @@ serverConfig.setPort(2023);
 
 扫描服务所在包(addPackage)，再启动具体服务，
 ```java
-Server server = ServerBuilder.newBuilder().serverConfig(serverConfig)
-                .addPackage("rpctest.hello")
+Server server = ServerBuilder.newBuilder().serverConfig(serverConfig).addPackage("rpctest.hello")
                 .build().start();
 ```
 
@@ -129,12 +128,9 @@ MyMessage response = helloService.say(message);
 asyncCall中写调用远程逻辑，callBack中写回调函数
 
 ```java
-ShadowClient.<String>asyncCall(()->{
-        helloService.helloSlowly("Tom");
-        logger.info("发送 hello 消息");
-    },(helloResponse)->{
-        logger.info("hello 服务端响应:"+helloResponse);
-    });
+ShadowClient.<String>asyncCall(
+                ()-> helloService.helloSlowly("Tom"),
+                (helloResponse)-> logger.info("hello 服务端响应:"+helloResponse) );
 ```
 
 ### 3. 全双工消息通信
