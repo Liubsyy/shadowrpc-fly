@@ -9,6 +9,37 @@
 - client-all : 客户端最小依赖包，仅1.8M
 - server : 服务端，基于netty+kryo
 
+以上模块均已发布maven中央仓库，直接引用即可
+
+```xml
+<!-- shadowrpcfly client 依赖-->
+<dependency>
+    <groupId>io.github.liubsyy</groupId>
+    <artifactId>shadowrpcfly-client</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+```xml
+<!-- shadowrpcfly client 最小包全依赖-->
+<dependency>
+    <groupId>io.github.liubsyy</groupId>
+    <artifactId>shadowrpcfly-client-all</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+```xml
+<!-- shadowrpcfly server 依赖-->
+<dependency>
+    <groupId>io.github.liubsyy</groupId>
+    <artifactId>shadowrpcfly-server</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+
+
 ## 功能
 - rpc服务调用：支持同步和异步调用
 - 全双工通信：服务端可主动向客户端发送消息，客户端也可向服务器发送消息
