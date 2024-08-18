@@ -43,16 +43,16 @@ public class HelloClient {
         message.setNum(100);
         message.setContent("Hello, Server!");
 
-        System.out.printf("发送请求 : %s\n",message);
+        logger.info("发送请求 : {}",message);
         MyMessage response = helloService.say(message);
-        System.out.printf("接收服务端消息 : %s\n",response);
+        logger.info("接收服务端消息 : {}",response);
     }
 
     /**
      * 异步调用hello
      */
     @Test
-    public void helloClientAsync() {
+    public void helloClientAsync() throws InterruptedException {
         ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
         shadowClient.init();
 
@@ -62,10 +62,7 @@ public class HelloClient {
         ShadowClient.<String>asyncCall(()->{
             helloService.helloSlowly("Tom");
             logger.info("发送 hello 消息");
-        },(helloResponse)->{
-            logger.info("hello 服务端响应:"+helloResponse);
-            System.exit(0);
-        });
+        },(helloResponse)-> logger.info("hello 服务端响应:"+helloResponse));
 
         MyMessage message = new MyMessage();
         message.setNum(100);
@@ -74,12 +71,11 @@ public class HelloClient {
         ShadowClient.<MyMessage>asyncCall(()->{
             helloService.say(message);
             logger.info("message消息发送");
-        },(messageResponse)->{
-            logger.info("message消息响应:"+messageResponse);
-        });
+        },(messageResponse)-> logger.info("message消息响应:"+messageResponse));
 
         logger.info("发消息工作已完毕");
-        shadowClient.keep();
+
+        Thread.sleep(5000);
     }
 
 
