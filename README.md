@@ -6,7 +6,7 @@
 
 ## 主要模块
 - client : 客户端，基于netty+kryo
-- client-all : 客户端最小依赖包，仅1.8M
+- client-all : 客户端全依赖包，仅1.8M
 - server : 服务端，基于netty+kryo
 
 以上模块均已发布maven中央仓库，直接引用即可
@@ -21,7 +21,7 @@
 ```
 
 ```xml
-<!-- shadowrpcfly client 最小包全依赖-->
+<!-- shadowrpcfly client 全依赖包-->
 <dependency>
     <groupId>io.github.liubsyy</groupId>
     <artifactId>shadowrpcfly-client-all</artifactId>
