@@ -3,6 +3,7 @@ package com.liubs.shadowrpcfly.client.connection;
 import com.liubs.shadowrpcfly.AsyncCall;
 import com.liubs.shadowrpcfly.client.handler.ShadowChannelInitializer;
 import com.liubs.shadowrpcfly.client.holder.CallBackHolder;
+import com.liubs.shadowrpcfly.client.holder.ReceiveHolder;
 import com.liubs.shadowrpcfly.client.proxy.RemoteServerProxy;
 import com.liubs.shadowrpcfly.config.ClientConfig;
 import com.liubs.shadowrpcfly.logging.Logger;
@@ -33,15 +34,19 @@ public class ShadowClient implements IConnection{
     private String remoteIp;
     private int remotePort;
 
-    private ClientConfig config = new ClientConfig();
+    private ClientConfig config;
 
     public ShadowClient(String host, int port) {
-        this(host,port,new NioEventLoopGroup());
+       this(host,port,new ClientConfig());
     }
-    public ShadowClient(String host, int port,EventLoopGroup group) {
+
+    public ShadowClient(String host, int port, ClientConfig config) {
         this.remoteIp = host;
         this.remotePort = port;
-        this.group = group;
+        this.config = new ClientConfig();
+        this.group = new NioEventLoopGroup();
+
+        ReceiveHolder.initExecutor(config);
     }
 
     public void setConfig(ClientConfig config) {

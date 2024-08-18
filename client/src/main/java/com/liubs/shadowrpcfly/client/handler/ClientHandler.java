@@ -15,12 +15,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class ClientHandler extends ChannelInboundHandlerAdapter{
     private static final Logger logger = Logger.getLogger(ClientHandler.class);
 
-    private ClientConfig config;
-
-    public ClientHandler(ClientConfig config) {
-        this.config = config;
-        ReceiveHolder.initExecutor(config);
-    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {

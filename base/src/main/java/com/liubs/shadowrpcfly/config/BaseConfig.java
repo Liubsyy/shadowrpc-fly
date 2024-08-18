@@ -22,7 +22,7 @@ public class BaseConfig {
     private int heartBeatWaitSeconds = 10;
 
     //监听消息逻辑线程池大小
-    private int messagePoolSize=64;
+    private int messagePoolSize = 64;
 
     public String getSerializer() {
         return serializer;

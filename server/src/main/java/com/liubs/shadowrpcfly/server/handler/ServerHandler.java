@@ -1,25 +1,22 @@
 package com.liubs.shadowrpcfly.server.handler;
 
 
-import com.liubs.shadowrpcfly.config.ServerConfig;
 import com.liubs.shadowrpcfly.listener.IShadowMessageListener;
 import com.liubs.shadowrpcfly.listener.ShadowMessageListeners;
 import com.liubs.shadowrpcfly.logging.Logger;
 import com.liubs.shadowrpcfly.protocol.ShadowMessage;
 import com.liubs.shadowrpcfly.server.connection.ClientChannels;
 import com.liubs.shadowrpcfly.server.module.ModulePool;
-import com.liubs.shadowrpcfly.server.module.SerializeModule;
 import com.liubs.shadowrpcfly.constant.ResponseCode;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCRequest;
 import com.liubs.shadowrpcfly.protocol.ShadowRPCResponse;
 import com.liubs.shadowrpcfly.server.module.ServerModule;
 import com.liubs.shadowrpcfly.server.service.ServiceLookUp;
 import com.liubs.shadowrpcfly.server.service.ServiceTarget;
+import com.liubs.shadowrpcfly.server.util.ExecutorUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-
-import java.util.concurrent.*;
 
 /**
  * @author Liubsyy
@@ -27,31 +24,8 @@ import java.util.concurrent.*;
  **/
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ServerHandler.class);
-    private static final int AVAILABLE_PROCESSORS = Runtime.getRuntime().availableProcessors();
-
-    private static ExecutorService executorService;
-
-    private static ExecutorService messageService = Executors.newFixedThreadPool(20);
-
-    private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
     private ServerModule serverModule = ModulePool.getModule(ServerModule.class);
 
-
-    public ServerHandler() {
-        if(null ==executorService){
-            synchronized (ServerHandler.class) {
-                if(null == executorService) {
-                    ServerConfig serverConfig = serverModule.getServerConfig();
-                    executorService = new ThreadPoolExecutor(serverConfig.getServerHandleCorePoolSize(),
-                            serverConfig.getServerHandleMaxPoolSize(),
-                            serverConfig.getServerHandleKeepAliveSeconds(), TimeUnit.SECONDS,
-                            new LinkedBlockingQueue<>(serverConfig.getServerHandleMaxPoolSize()));
-                    messageService = Executors.newFixedThreadPool(serverConfig.getMessagePoolSize());
-                }
-            }
-        }
-
-    }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -77,13 +51,13 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         //logger.info("Server received: " + request.getParams()[0]);
 
         if(request.getTraceId().equals(IShadowMessageListener.TRACE_ID)) {
-            messageService.execute(()->{
-                try{
+            ExecutorUtil.executeMessage(() -> {
+                try {
                     ClientChannels.setContextChannel(ctx);
-                    ShadowMessage message = (ShadowMessage)request.getParams()[0];
-                    ShadowMessageListeners.getInstance().notifyListener(message.getMessageClass(),message.getObj());
+                    ShadowMessage message = (ShadowMessage) request.getParams()[0];
+                    ShadowMessageListeners.getInstance().notifyListener(message.getMessageClass(), message.getObj());
                 } catch (Throwable e) {
-                    logger.error("Call message err",e);
+                    logger.error("Call message err", e);
                 } finally {
                     ClientChannels.removeContextChannel();
                 }
@@ -92,7 +66,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             return;
         }
 
-        executorService.execute(()->{
+        ExecutorUtil.executeService(()->{
             try {
                 ClientChannels.setContextChannel(ctx);
 

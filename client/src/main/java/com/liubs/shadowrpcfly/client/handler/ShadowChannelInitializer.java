@@ -36,7 +36,7 @@ public class ShadowChannelInitializer  extends ChannelInitializer<SocketChannel>
         }
 
         //处理消息的逻辑
-        pipeline.addLast(new ClientHandler(config));
+        pipeline.addLast(new ClientHandler());
 
     }
 }
