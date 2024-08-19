@@ -16,7 +16,7 @@
 <dependency>
     <groupId>io.github.liubsyy</groupId>
     <artifactId>shadowrpcfly-client</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -25,7 +25,7 @@
 <dependency>
     <groupId>io.github.liubsyy</groupId>
     <artifactId>shadowrpcfly-client-all</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -34,7 +34,7 @@
 <dependency>
     <groupId>io.github.liubsyy</groupId>
     <artifactId>shadowrpcfly-server</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 

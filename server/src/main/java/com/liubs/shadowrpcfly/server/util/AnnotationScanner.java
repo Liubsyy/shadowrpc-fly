@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -21,7 +22,9 @@ public class AnnotationScanner {
     public static <T extends Annotation>  List<ShadowServiceHolder<T>> scanAnnotations(String packageName, Class<T> annotation) throws IOException {
 
         List<ShadowServiceHolder<T>> allResults = new ArrayList<>();
-        ClassScanWalker.scanPackage(packageName, clazz->{
+
+        Set<Class<?>> classes = PackageScanUtil.scanClasses(packageName, annotation);
+        classes.forEach(clazz->{
             T shadowServiceAnno = clazz.getAnnotation(annotation);
             if (shadowServiceAnno != null) {
                 allResults.add(new ShadowServiceHolder<>(shadowServiceAnno, clazz));
@@ -29,7 +32,7 @@ public class AnnotationScanner {
         });
 
         logger.info("scanAnnotations="+allResults);
-       return allResults;
+        return allResults;
     }
 
 }

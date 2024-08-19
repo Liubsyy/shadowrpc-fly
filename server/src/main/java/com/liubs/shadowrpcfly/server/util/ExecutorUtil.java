@@ -29,7 +29,7 @@ public class ExecutorUtil {
                     executorService = new ThreadPoolExecutor(serverConfig.getServerHandleCorePoolSize(),
                             serverConfig.getServerHandleMaxPoolSize(),
                             serverConfig.getServerHandleKeepAliveSeconds(), TimeUnit.SECONDS,
-                            new LinkedBlockingQueue<>(serverConfig.getServerHandleMaxPoolSize()));
+                            new LinkedBlockingQueue<>(serverConfig.getServerHandleQueueSize()));
                     messageService = Executors.newFixedThreadPool(serverConfig.getMessagePoolSize());
                 }
             }

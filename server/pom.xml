@@ -6,19 +6,19 @@
     <parent>
         <groupId>io.github.liubsyy</groupId>
         <artifactId>shadowrpcfly</artifactId>
-        <version>1.0.1</version>
+        <version>${shadowrpc-fly.version}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>shadowrpcfly-server</artifactId>
-    <version>1.0.1</version>
+    <version>${shadowrpc-fly.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>io.github.liubsyy</groupId>
             <artifactId>shadowrpcfly-base</artifactId>
-            <version>1.0.1</version>
+            <version>${shadowrpc-fly.version}</version>
             <scope>compile</scope>
         </dependency>
 
