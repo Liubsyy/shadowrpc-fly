@@ -6,7 +6,7 @@
 
     <groupId>io.github.liubsyy</groupId>
     <artifactId>shadowrpcfly</artifactId>
-    <version>${shadowrpc-fly.version}</version>
+    <version>1.0.3</version>
     <packaging>pom</packaging>
 
     <name>shadowrpc-fly</name>
@@ -24,8 +24,6 @@
 
 
     <properties>
-        <!-- shadowrpc-fly的版本 -->
-        <shadowrpc-fly.version>1.0.2</shadowrpc-fly.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
