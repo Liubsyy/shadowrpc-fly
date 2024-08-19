@@ -124,7 +124,7 @@ ServerConfig serverConfig = new ServerConfig();
 serverConfig.setPort(2023);
 ```
 
-扫描服务所在包(addPackage)，再启动具体服务，
+扫描服务所在包(addPackage)，再启动具体服务
 ```java
 Server server = ServerBuilder.newBuilder().serverConfig(serverConfig).addPackage("rpctest.hello")
                 .build().start();
