@@ -19,7 +19,7 @@
 配置|耗时|平均QPS|瞬时最高QPS
 ---|---|---|---
 MacBook 2.2 GHz 4核 Intel Core i7 内存 16G |23.8s|4.2w|5.4w
-MacBook M1芯片 8核心 内存16G |12.4s|8w|10w
+MacBook M1芯片 8核 内存16G |12.4s|8w|10w
 win10笔记本 i7 4核 2.8GHz 内存|25.6s|3.9w|4.1w
 
 
