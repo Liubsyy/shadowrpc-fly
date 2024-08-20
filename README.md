@@ -203,7 +203,7 @@ shadowClient.sendMessage(message);
 ```
 
 #### 消息监听
-启动时注册消息监听器（响应函数），一个Class对于的消息可注册多个监听者（响应函数）
+启动时注册消息监听器（响应函数），一个Class对应的消息可注册多个监听者（响应函数）
 
 ```java
 ShadowMessageListeners.getInstance().<T>addListener
