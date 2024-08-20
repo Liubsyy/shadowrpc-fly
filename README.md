@@ -25,7 +25,7 @@ win10笔记本 i7 4核 2.8GHz 内存|25.6s|3.9w|4.1w
 
 ## 快速使用
 
-> 以下例子在client和server模块中都有单侧
+> 以下例子在client和server模块中都有单测
 
 先根据需要引用maven依赖: 
 
